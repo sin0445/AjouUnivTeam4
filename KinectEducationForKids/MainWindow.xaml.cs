@@ -23,7 +23,6 @@ namespace KinectEducationForKids
         #region Member Variables
         private KinectSensor _KinectDevice;
         private Skeleton[] _Skeletons;
-        int count = 0;
         #endregion Member Variables
 
         public MainWindow()
