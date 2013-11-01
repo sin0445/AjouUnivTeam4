@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Kinect;
+using System.Windows.Threading;
 
 namespace KinectEducationForKids
 {
@@ -23,6 +24,12 @@ namespace KinectEducationForKids
         #region Member Variables
         private KinectSensor _KinectDevice;
         private Skeleton[] _Skeletons;
+
+        private DispatcherTimer _timer;
+        private int _ticks;
+        private UIElement _lastElement;
+
+        private MenuWindow _menuWindow;
         #endregion Member Variables
 
         public MainWindow()
@@ -32,7 +39,7 @@ namespace KinectEducationForKids
             this.Unloaded += (s, e) => { this._KinectDevice = null; };
         }
 
-        #region Methods
+        #region CoreMethods
         private void DiscoverKinectSensor()
         {
             KinectSensor.KinectSensors.StatusChanged += KinectSensors_StatusChanged;
@@ -77,19 +84,21 @@ namespace KinectEducationForKids
                     if (skeleton == null)
                     {
                         //만일 인식된 스켈레톤이 없는 경우 손 커서를 숨기게 된다.
-                        //HandCursorElement.Visibility = Visibility.Collapsed;
+                        HandCursorElement.Visibility = Visibility.Collapsed;
                     }
                     else
                     {
                         Joint primaryHand = GetPrimaryHand(skeleton);
                         TrackHand(primaryHand);
-                        //TrackHandLocation(primaryHand);
+                        TrackHandLocation(primaryHand);
                         //손에 따른 UI 변경 메소드 호출
                     }
                 }
             }
         }
+        #endregion CoreMethods
 
+        #region GettingMethods
         private static Skeleton GetPrimarySkeleton(Skeleton[] skeletons)
         {
             //만일 한명의 스켈레톤만 인식되는 경우 해당 스켈레톤을, 여러명의 스켈레톤이 인식되는 경우 가장 가까운 스켈레톤을 선택
@@ -145,40 +154,153 @@ namespace KinectEducationForKids
             return primaryHand;
         }
 
+        private Point GetJointPoint(Joint joint)
+        {
+            DepthImagePoint dp = this.KinectDevice.CoordinateMapper.MapSkeletonPointToDepthPoint(joint.Position, this.KinectDevice.DepthStream.Format);
+            Point point = new Point();
+
+            point.X = (int)(dp.X * this.LayoutRoot.RenderSize.Width / this.KinectDevice.DepthStream.FrameWidth);
+            point.Y = (int)(dp.Y * this.LayoutRoot.RenderSize.Height / this.KinectDevice.DepthStream.FrameHeight);
+
+            return new Point(point.X, point.Y);
+        }
+
+        private IInputElement GetHitImage(Joint hand, UIElement target)
+        {
+            Point targetPoint = GetJointPoint(hand);
+            targetPoint = Main.TranslatePoint(targetPoint, target);
+            return target.InputHitTest(targetPoint);
+        }
+        #endregion GettingMethods
+
+        #region TrackingMethods
         private void TrackHand(Joint hand)
         {
             //손의 Joint를 파라메터로 받아서 손의 위치를 스크린 상에 표시해주기 위한 메서드
 
             if (hand.TrackingState == JointTrackingState.NotTracked)
             {
-                //  HandCursorElement.Visibility = System.Windows.Visibility.Collapsed;
+                HandCursorElement.Visibility = System.Windows.Visibility.Collapsed;
             }
             else
             {
-                //HandCursorElement.Visibility = System.Windows.Visibility.Visible;
+                HandCursorElement.Visibility = System.Windows.Visibility.Visible;
                 Window window = Application.Current.MainWindow;
 
-                DepthImagePoint point = this.KinectDevice.CoordinateMapper.MapSkeletonPointToDepthPoint(hand.Position, this.KinectDevice.DepthStream.Format);
-                point.X = (int)(point.X * window.ActualWidth / this.KinectDevice.DepthStream.FrameWidth);
-                point.Y = (int)(point.Y * window.ActualHeight / this.KinectDevice.DepthStream.FrameHeight);
-                //point.X = (int)((point.X * LayoutRoot.ActualWidth / this.KinectDevice.DepthStream.FrameWidth) - (HandCursorElement.ActualWidth / 2.0));
-                //point.Y = (int)((point.Y * LayoutRoot.ActualHeight / this.KinectDevice.DepthStream.FrameHeight) - (HandCursorElement.ActualHeight / 2.0));
+                Point point = GetJointPoint(hand);
 
-                //Canvas.SetLeft(HandCursorElement, point.X);
-                //Canvas.SetTop(HandCursorElement, point.Y);
+                Canvas.SetLeft(HandCursorElement, point.X);
+                Canvas.SetTop(HandCursorElement, point.Y);
 
-                //if (hand.JointType == JointType.HandRight)
-                //{
-                //    HandcursorScale.ScaleX = 1;
-                //}
-                //else
-                //{
-                //    HandcursorScale.ScaleX = -1;
-                //}
+                if (hand.JointType == JointType.HandRight)
+                {
+                    HandcursorScale.ScaleX = 1;
+                }
+                else
+                {
+                    HandcursorScale.ScaleX = -1;
+                }
             }
         }
 
-        #endregion Methods
+        private void TrackHandLocation(Joint hand)
+        {
+            UIElement element;
+            //손이 버튼 위에 있는 경우
+            //계속 버튼위에 있는 경우(Timer 체크 후 일정 시간 이상 지나면 현재 윈도우 hidden 후 메뉴창 add) 
+            //새로운 버튼위에 있는 경우(Timer 초기화 후 lastElement에 현재 버튼 등록)
+
+            //손이 버튼위에 없는 경우
+            //버튼에서 벗어난 경우(lastElement null, Timer stop후 null)
+            //원래 밖에 있었던 경우(그냥 무시)
+            if ((element = (UIElement)GetHitImage(hand, GameStartBtn)) != null)
+            {
+                if (this._lastElement != null && element.Equals(this._lastElement))
+                {
+                    if (this._timer != null)
+                    {
+                        CreateTimer();
+                    }
+                    else if(this._ticks >= 20)
+                    {
+                        //윈도우 전환
+
+                        this._menuWindow = new MenuWindow();
+                        this._menuWindow.MenuCloseHandler += MenuClose;
+                        Main.Visibility = Visibility.Hidden;
+                        LayoutRoot.Children.Add(_menuWindow);
+                    }
+                }
+                else
+                {
+                    CreateTimer();
+                    _lastElement = element;
+                }
+            }
+            else if ((element = (UIElement)GetHitImage(hand, GameExitBtn)) != null)
+            {
+                if (this._lastElement != null && element.Equals(this._lastElement))
+                {
+                    if (this._timer == null)
+                    {
+                        CreateTimer();
+                    }
+                    else if (this._ticks >= 20)
+                    {
+                        LayoutRoot.Children.Clear();
+                        Close();
+                        //윈도우 전환
+                    }
+                }
+                else
+                {
+                    if (this._timer != null)
+                    {
+                        RemoveTimer();
+                    }
+                    CreateTimer();
+                    _lastElement = element;
+                }
+            }
+            else
+            {
+                if (this._lastElement != null)
+                    this._lastElement = null;
+
+                if (this._timer != null)
+                {
+                    RemoveTimer();
+                }
+            }
+        }
+        #endregion TrackingMethods
+
+        private void CreateTimer()
+        {
+            this._ticks = 0;
+            this._timer = new DispatcherTimer();
+            this._timer.Interval = TimeSpan.FromSeconds(0.1);
+            this._timer.Tick += new EventHandler(OnTimerTick);
+        }
+
+        private void RemoveTimer()
+        {
+            this._ticks = 0;
+            this._timer.Stop();
+            this._timer = null;
+        }
+
+        private void OnTimerTick(object sender, EventArgs e)
+        {
+            this._ticks++;
+        }
+
+        private void MenuClose(object sender, EventArgs e)
+        {
+            Main.Visibility = Visibility.Visible;
+            LayoutRoot.Children.Remove(this._menuWindow);
+            this._menuWindow = null;
+        }
 
         #region Property
         public KinectSensor KinectDevice
