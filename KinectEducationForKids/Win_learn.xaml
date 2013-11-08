@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="KinectEducationForKids.Win_learn"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" Name="view_learn">
+    <Grid x:Name="grid_learn">
+        <StackPanel Name="panel" Orientation="Horizontal">
+            <Image Name="img_main" Source="/KinectEducationForKids;component/Images/동식물.jpg" Stretch="Fill">
+            </Image>
+            <Grid Name="grid" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Button Name="btn_con" Grid.Column="0" Grid.Row="0" Margin="30">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/자음%20버튼.png" Stretch="Fill"/>
+                    </Button.Background>
+                </Button>
+                <Button Name="btn_vow" Grid.Column="0" Grid.Row="1" Margin="30">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/모음%20버튼.png" Stretch="Fill"/>
+                    </Button.Background>
+                </Button>
+                <Button Name="btn_back" Grid.Column="0" Grid.Row="2" Margin="30" Click="btn_back_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/뒤로가기%20버튼.png" Stretch="Fill"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -32,6 +32,8 @@ namespace KinectEducationForKids
         private UIElement _lastElement;
 
         private MenuWindow _menuWindow;
+        public Win_learn win_learn;
+        public Win_quiz win_quiz;
         #endregion Member Variables
 
         public MainWindow()
@@ -40,6 +42,10 @@ namespace KinectEducationForKids
             _KinectController = new KinectController();
             this.Loaded += (s, e) => { SettingKinectDevice(); };
             this.Unloaded += (s, e) => { UninitializeKinectDevice(); };
+
+            this.img_main.Width = this.window.Width / 3;
+            this.grid.Width = this.window.Width - this.img_main.Width;
+            this.grid.HorizontalAlignment = HorizontalAlignment.Right;
         }
         #region CoreMethods
         private void SettingKinectDevice()
@@ -69,7 +75,7 @@ namespace KinectEducationForKids
                     if (skeleton == null)
                     {
                         //만일 인식된 스켈레톤이 없는 경우 손 커서를 숨기게 된다.
-                        HandCursorElement.Visibility = Visibility.Collapsed;
+                        //HandCursorElement.Visibility = Visibility.Collapsed;
                     }
                     else
                     {
@@ -154,7 +160,6 @@ namespace KinectEducationForKids
         {
             Point targetPoint = GetJointPoint(hand);
             targetPoint = Main.TranslatePoint(targetPoint, target);
-            RelLoc.Text = String.Format("RelLoc {0}, {1}", targetPoint.X, targetPoint.Y);
             return target.InputHitTest(targetPoint);
         }
         #endregion GettingMethods
@@ -166,28 +171,27 @@ namespace KinectEducationForKids
 
             if (hand.TrackingState == JointTrackingState.NotTracked)
             {
-                HandCursorElement.Visibility = System.Windows.Visibility.Collapsed;
+                //HandCursorElement.Visibility = System.Windows.Visibility.Collapsed;
             }
             else
             {
-                HandCursorElement.Visibility = System.Windows.Visibility.Visible;
+                //HandCursorElement.Visibility = System.Windows.Visibility.Visible;
 
                 DepthImagePoint point = this._KinectDevice.CoordinateMapper.MapSkeletonPointToDepthPoint(hand.Position, this._KinectDevice.DepthStream.Format);
-                point.X = (int)((point.X * Main.ActualWidth / this._KinectDevice.DepthStream.FrameWidth) - (HandCursorElement.ActualWidth / 2.0));
-                point.Y = (int)((point.Y * Main.ActualHeight / this._KinectDevice.DepthStream.FrameHeight) - (HandCursorElement.ActualHeight / 2.0));
-                handLoc.Text = String.Format("HandLoc {0}, {1}", point.X, point.Y);
+                //point.X = (int)((point.X * Main.ActualWidth / this._KinectDevice.DepthStream.FrameWidth) - (HandCursorElement.ActualWidth / 2.0));
+                //point.Y = (int)((point.Y * Main.ActualHeight / this._KinectDevice.DepthStream.FrameHeight) - (HandCursorElement.ActualHeight / 2.0));
 
-                Canvas.SetLeft(HandCursorElement, point.X);
-                Canvas.SetTop(HandCursorElement, point.Y);
+                //Canvas.SetLeft(HandCursorElement, point.X);
+                //Canvas.SetTop(HandCursorElement, point.Y);
 
               
                 if (hand.JointType == JointType.HandRight)
                 {
-                    HandcursorScale.ScaleX = 1;
+                    //HandcursorScale.ScaleX = 1;
                 }
                 else
                 {
-                    HandcursorScale.ScaleX = -1;
+                    //HandcursorScale.ScaleX = -1;
                 }
             }
         }
@@ -202,7 +206,8 @@ namespace KinectEducationForKids
             //손이 버튼위에 없는 경우
             //버튼에서 벗어난 경우(lastElement null, Timer stop후 null)
             //원래 밖에 있었던 경우(그냥 무시)
-            if ((element = (UIElement)GetHitImage(hand, GameStartBtn)) != null)         //StartBtn을 클릭하는 로직
+            /*
+             * if ((element = (UIElement)GetHitImage(hand, GameStartBtn)) != null)         //StartBtn을 클릭하는 로직
             {
                 if (this._lastElement != null && element.Equals(this._lastElement))     //StartBtn에 계속하여 손을 대고 있는 경우
                 {
@@ -212,7 +217,6 @@ namespace KinectEducationForKids
                     }
                     else if(this._ticks >= _hoverTime)
                     {
-                        GameTitle.Text = "PushedStartBtn";
                         //윈도우 전환
                         RemoveTimer();
                         
@@ -268,7 +272,7 @@ namespace KinectEducationForKids
                     RemoveTimer();
                 }
                 GameTitle.Text = "Nothing Touched";
-            }
+            }*/
         }
         #endregion TrackingMethods
 
@@ -292,7 +296,7 @@ namespace KinectEducationForKids
         private void OnTimerTick(object sender, EventArgs e)
         {
             this._ticks++;
-            TimerTick.Text = String.Format("Tick : {0}", this._ticks);
+            //TimerTick.Text = String.Format("Tick : {0}", this._ticks);
         }
 
         private void MenuClose(object sender, EventArgs e)
@@ -300,6 +304,36 @@ namespace KinectEducationForKids
             LayoutRoot.Children.Remove(this._menuWindow);
             Main.Visibility = Visibility.Visible;
             this._menuWindow = null;
+        }
+
+        private void btn_learn_Click(object sender, RoutedEventArgs e)
+        {
+            this.win_learn = new Win_learn(this);
+            this.win_learn.LearnCloseHandler += LearnClose;
+            Main.Visibility = Visibility.Hidden;
+            LayoutRoot.Children.Add(win_learn);
+        }
+
+        public void LearnClose(object sender, EventArgs e)
+        {
+            Main.Visibility = Visibility.Visible;
+            LayoutRoot.Children.Remove(this.win_learn);
+            this.win_learn = null;
+        }
+
+        private void btn_quiz_Click(object sender, RoutedEventArgs e)
+        {
+            this.win_quiz = new Win_quiz(this);
+            this.win_quiz.QuizCloseHandler += QuizClose;
+            Main.Visibility = Visibility.Hidden;
+            LayoutRoot.Children.Add(win_quiz);
+        }
+
+        public void QuizClose(object sender, EventArgs e)
+        {
+            Main.Visibility = Visibility.Visible;
+            LayoutRoot.Children.Remove(this.win_quiz);
+            this.win_quiz = null;
         }
     }
 }
