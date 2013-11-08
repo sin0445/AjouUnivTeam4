@@ -22,10 +22,12 @@ namespace KinectEducationForKids
     public partial class MainWindow : Window
     {
         #region Member Variables
+        private KinectController _KinectController;
         private KinectSensor _KinectDevice;
         private Skeleton[] _Skeletons;
 
         private DispatcherTimer _timer;
+        private const int _hoverTime = 30;
         private int _ticks;
         private UIElement _lastElement;
 
@@ -35,44 +37,27 @@ namespace KinectEducationForKids
         public MainWindow()
         {
             InitializeComponent();
-            this.Loaded += (s, e) => { DiscoverKinectSensor(); };
-            this.Unloaded += (s, e) => { this._KinectDevice = null; };
+            _KinectController = new KinectController();
+            this.Loaded += (s, e) => { SettingKinectDevice(); };
+            this.Unloaded += (s, e) => { UninitializeKinectDevice(); };
         }
-
         #region CoreMethods
-        private void DiscoverKinectSensor()
+        private void SettingKinectDevice()
         {
-            KinectSensor.KinectSensors.StatusChanged += KinectSensors_StatusChanged;
-            this.KinectDevice = KinectSensor.KinectSensors.FirstOrDefault(x => x.Status == KinectStatus.Connected);
+            this._KinectController.DiscoverKinectSensor();
+            this._KinectDevice = this._KinectController._KinectDevice;
+            this._Skeletons = new Skeleton[this._KinectDevice.SkeletonStream.FrameSkeletonArrayLength];
+            this._KinectDevice.SkeletonFrameReady += this.MainWindow_SkeletonFrameReady;
         }
 
-        private void KinectSensors_StatusChanged(object sender, StatusChangedEventArgs e)
+        private void UninitializeKinectDevice()
         {
-            switch (e.Status)
-            {
-                case KinectStatus.Connected:
-                    if (this.KinectDevice == null)
-                    {
-                        this.KinectDevice = e.Sensor;
-                    }
-                    break;
-
-                case KinectStatus.Disconnected:
-                    if (this.KinectDevice == e.Sensor)
-                    {
-                        this.KinectDevice = null;
-                        this.KinectDevice = KinectSensor.KinectSensors.FirstOrDefault(x => x.Status == KinectStatus.Connected);
-
-                        if (this.KinectDevice == null)
-                        {
-                            //Notify the user that the sensor is disconnected
-                        }
-                    }
-                    break;
-            }
+            this._KinectDevice.SkeletonFrameReady -= this.MainWindow_SkeletonFrameReady;
+            this._KinectController.UninitializeKinectSensor();
+            this._KinectDevice = null;
+            this._KinectController = null;
         }
-
-        private void KinectDevice_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
+        private void MainWindow_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
             using (SkeletonFrame frame = e.OpenSkeletonFrame())
             {
@@ -156,11 +141,11 @@ namespace KinectEducationForKids
 
         private Point GetJointPoint(Joint joint)
         {
-            DepthImagePoint dp = this.KinectDevice.CoordinateMapper.MapSkeletonPointToDepthPoint(joint.Position, this.KinectDevice.DepthStream.Format);
+            DepthImagePoint dp = this._KinectDevice.CoordinateMapper.MapSkeletonPointToDepthPoint(joint.Position, this._KinectDevice.DepthStream.Format);
             Point point = new Point();
 
-            point.X = (int)(dp.X * this.LayoutRoot.RenderSize.Width / this.KinectDevice.DepthStream.FrameWidth);
-            point.Y = (int)(dp.Y * this.LayoutRoot.RenderSize.Height / this.KinectDevice.DepthStream.FrameHeight);
+            point.X = (int)(dp.X * this.LayoutRoot.RenderSize.Width / this._KinectDevice.DepthStream.FrameWidth);
+            point.Y = (int)(dp.Y * this.LayoutRoot.RenderSize.Height / this._KinectDevice.DepthStream.FrameHeight);
 
             return new Point(point.X, point.Y);
         }
@@ -169,6 +154,7 @@ namespace KinectEducationForKids
         {
             Point targetPoint = GetJointPoint(hand);
             targetPoint = Main.TranslatePoint(targetPoint, target);
+            RelLoc.Text = String.Format("RelLoc {0}, {1}", targetPoint.X, targetPoint.Y);
             return target.InputHitTest(targetPoint);
         }
         #endregion GettingMethods
@@ -185,13 +171,16 @@ namespace KinectEducationForKids
             else
             {
                 HandCursorElement.Visibility = System.Windows.Visibility.Visible;
-                Window window = Application.Current.MainWindow;
 
-                Point point = GetJointPoint(hand);
+                DepthImagePoint point = this._KinectDevice.CoordinateMapper.MapSkeletonPointToDepthPoint(hand.Position, this._KinectDevice.DepthStream.Format);
+                point.X = (int)((point.X * Main.ActualWidth / this._KinectDevice.DepthStream.FrameWidth) - (HandCursorElement.ActualWidth / 2.0));
+                point.Y = (int)((point.Y * Main.ActualHeight / this._KinectDevice.DepthStream.FrameHeight) - (HandCursorElement.ActualHeight / 2.0));
+                handLoc.Text = String.Format("HandLoc {0}, {1}", point.X, point.Y);
 
                 Canvas.SetLeft(HandCursorElement, point.X);
                 Canvas.SetTop(HandCursorElement, point.Y);
 
+              
                 if (hand.JointType == JointType.HandRight)
                 {
                     HandcursorScale.ScaleX = 1;
@@ -213,64 +202,72 @@ namespace KinectEducationForKids
             //손이 버튼위에 없는 경우
             //버튼에서 벗어난 경우(lastElement null, Timer stop후 null)
             //원래 밖에 있었던 경우(그냥 무시)
-            if ((element = (UIElement)GetHitImage(hand, GameStartBtn)) != null)
+            if ((element = (UIElement)GetHitImage(hand, GameStartBtn)) != null)         //StartBtn을 클릭하는 로직
             {
-                if (this._lastElement != null && element.Equals(this._lastElement))
-                {
-                    if (this._timer != null)
-                    {
-                        CreateTimer();
-                    }
-                    else if(this._ticks >= 20)
-                    {
-                        //윈도우 전환
-
-                        this._menuWindow = new MenuWindow();
-                        this._menuWindow.MenuCloseHandler += MenuClose;
-                        Main.Visibility = Visibility.Hidden;
-                        LayoutRoot.Children.Add(_menuWindow);
-                    }
-                }
-                else
-                {
-                    CreateTimer();
-                    _lastElement = element;
-                }
-            }
-            else if ((element = (UIElement)GetHitImage(hand, GameExitBtn)) != null)
-            {
-                if (this._lastElement != null && element.Equals(this._lastElement))
+                if (this._lastElement != null && element.Equals(this._lastElement))     //StartBtn에 계속하여 손을 대고 있는 경우
                 {
                     if (this._timer == null)
                     {
                         CreateTimer();
                     }
-                    else if (this._ticks >= 20)
+                    else if(this._ticks >= _hoverTime)
                     {
-                        LayoutRoot.Children.Clear();
-                        Close();
+                        GameTitle.Text = "PushedStartBtn";
                         //윈도우 전환
+                        RemoveTimer();
+                        
+                        this._menuWindow = new MenuWindow(this.LayoutRoot, this._KinectController);
+                        this._menuWindow.MenuCloseHandler += MenuClose;
+                        Main.Visibility = Visibility.Hidden;
+                        LayoutRoot.Children.Add(this._menuWindow);
                     }
                 }
-                else
+                else                    //새롭게 StartBtn에 손을 올린 경우
                 {
                     if (this._timer != null)
+                        RemoveTimer();
+
+                    CreateTimer();
+                }
+                _lastElement = element;
+            }
+            else if ((element = (UIElement)GetHitImage(hand, GameExitBtn)) != null)     //ExitBtn을 클릭하는 로직
+            {
+                GameTitle.Text = "PushedExitBtn";
+                if (this._lastElement != null && element.Equals(this._lastElement))     //계속해서 ExitBtn에 손을 대고 있는 경우
+                {
+                    if (this._timer == null)    //만일 타이머가 없으면 생성시킨다
+                    {
+                        CreateTimer();
+                    }
+                    else if (this._ticks >= _hoverTime)     //타이머가 있으나 특정 시간 이상 손을 댄 경우
+                    {
+                        RemoveTimer();
+                        LayoutRoot.Children.Clear();
+                        Close();
+                        //프로그램 종료
+                    }
+                }
+                else                         //새롭게 ExitBtn에 손을 댄 경우
+                {
+                    if (this._timer != null)            //만일 타이머가 기존에 존재하는 경우 이를 제거한후
                     {
                         RemoveTimer();
                     }
-                    CreateTimer();
-                    _lastElement = element;
+                    CreateTimer();                      //다시 타이머를 생성한다
                 }
+                _lastElement = element;                 //그리고 이전 element에 ExitBtn을 등록
             }
-            else
+            else                                        //GameStartBtn이나 ExitBtn이 아닌 다른 부분에 손이 닿아져 있는 경우
             {
-                if (this._lastElement != null)
+                if (this._lastElement != null)          //lastElement를 제거
                     this._lastElement = null;
 
-                if (this._timer != null)
+                if (this._timer != null)                //타이머가 있는 경우에도 이를 제거
                 {
                     RemoveTimer();
                 }
+                GameTitle.Text = "Nothing Touched";
             }
         }
         #endregion TrackingMethods
@@ -281,61 +278,28 @@ namespace KinectEducationForKids
             this._timer = new DispatcherTimer();
             this._timer.Interval = TimeSpan.FromSeconds(0.1);
             this._timer.Tick += new EventHandler(OnTimerTick);
+            this._timer.Start();
         }
 
         private void RemoveTimer()
         {
-            this._ticks = 0;
             this._timer.Stop();
+            this._timer.Tick -= OnTimerTick;
+            this._ticks = 0;
             this._timer = null;
         }
 
         private void OnTimerTick(object sender, EventArgs e)
         {
             this._ticks++;
+            TimerTick.Text = String.Format("Tick : {0}", this._ticks);
         }
 
         private void MenuClose(object sender, EventArgs e)
         {
-            Main.Visibility = Visibility.Visible;
             LayoutRoot.Children.Remove(this._menuWindow);
+            Main.Visibility = Visibility.Visible;
             this._menuWindow = null;
         }
-
-        #region Property
-        public KinectSensor KinectDevice
-        {
-            //Uninitialize
-            get { return this._KinectDevice; }
-            set
-            {
-                if (this._KinectDevice != value)
-                {
-                    if (this._KinectDevice != null)
-                    {
-                        this._KinectDevice.Stop();
-                        this._KinectDevice.SkeletonStream.Disable();
-                        this._KinectDevice.SkeletonFrameReady -= KinectDevice_SkeletonFrameReady;
-                        this._Skeletons = null;
-                        this._KinectDevice = null;
-                    }
-                    this._KinectDevice = value;
-                }
-
-                //Initialize
-                if (this._KinectDevice != null)
-                {
-                    if (this._KinectDevice.Status == KinectStatus.Connected)
-                    {
-                        //this.KinectDevice = value;
-                        this._KinectDevice.SkeletonStream.Enable();
-                        this._Skeletons = new Skeleton[this.KinectDevice.SkeletonStream.FrameSkeletonArrayLength];
-                        this._KinectDevice.SkeletonFrameReady += KinectDevice_SkeletonFrameReady;
-                        this._KinectDevice.Start();
-                    }
-                }
-            }
-        }
-        #endregion Property
     }
 }

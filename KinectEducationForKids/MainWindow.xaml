@@ -5,13 +5,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         Height="600" Width="800">
-    
+
     <Grid x:Name="LayoutRoot">
         <Grid x:Name="Main" Background="White">
-            <TextBlock x:Name="GameTitle" Text="Kinect Education for Kids" FontSize="40"/>
+            <StackPanel>
+                <TextBlock x:Name="GameTitle" Text="Kinect Education for Kids" FontSize="40"/>
+                <TextBlock x:Name="handLoc" Text="HandLoc" FontSize="40"/>
+                <TextBlock x:Name="RelLoc" Text="RelLoc" FontSize="40"/>
+                <TextBlock x:Name="TimerTick" Text="Tick" FontSize="40"/>
+            </StackPanel>
             <Canvas x:Name="SelectWindow">
-                <Rectangle x:Name="GameStartBtn" Width="100" Height="100" Fill="Red" Canvas.Left="100" Canvas.Bottom="100" Opacity="0.3"/>
-                <Ellipse x:Name="GameExitBtn" Width="100" Height="100" Fill="Blue" Canvas.Right="100" Canvas.Bottom="100" Opacity="0.3"/>
+                <Rectangle x:Name="GameStartBtn" Canvas.Bottom="100" Canvas.Left="100" Width="100" Height="100" Fill="Red" Opacity="0.3"/>
+                <Ellipse x:Name="GameExitBtn" Canvas.Bottom="100" Canvas.Right="100" Width="100" Height="100" Fill="Blue"  Opacity="0.3"/>
             </Canvas>
             <Canvas x:Name="GameBoardElement">
                 <Image x:Name="HandCursorElement" Source="Images/Cursor1.png" Width="75" Height="75" RenderTransformOrigin="0.5,0.5">
