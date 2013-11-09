@@ -116,7 +116,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Cursor1.png" />
+    <Resource Include="Images\HandCursor.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\동물 버튼.png" />

@@ -35,5 +35,14 @@
                 </Button>
             </Grid>
         </StackPanel>
+        <Canvas x:Name="GameBoardElement">
+            <Image x:Name="HandCursorElement" Source="Images/HandCursor.png" Width="50" Height="50" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform x:Name="HandcursorScale" ScaleX="1"/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+        </Canvas>
     </Grid>
 </UserControl>
