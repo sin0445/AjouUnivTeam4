@@ -296,6 +296,7 @@ namespace KinectEducationForKids
         }
         #endregion TrackingMethods
 
+        #region TimerMethods
         private void CreateTimer()
         {
             this._ticks = 0;
@@ -317,7 +318,7 @@ namespace KinectEducationForKids
         {
             this._ticks++;
         }
-
+        #endregion TimerMethods
         //private void MenuClose(object sender, EventArgs e)
         //{
         //    LayoutRoot.Children.Remove(this._menuWindow);

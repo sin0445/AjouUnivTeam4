@@ -29,6 +29,11 @@ namespace KinectEducationForKids
         private Skeleton[] _Skeletons;
         private KinectSensor _KinectDevice;
         private KinectController _KinectController;
+
+        private UIElement _lastElement;
+        private int _ticks;
+        private DispatcherTimer _timer;
+        private const int _hoverTime = 20;
         #endregion MemberVariables
 
         public Win_quiz(MainWindow win, KinectController control)
@@ -218,12 +223,118 @@ namespace KinectEducationForKids
             //손이 버튼위에 없는 경우
             //버튼에서 벗어난 경우(lastElement null, Timer stop후 null)
             //원래 밖에 있었던 경우(그냥 무시)
-            if ((element = (UIElement)GetHitImage(hand, btn_back)) != null)         //StartBtn을 클릭하는 로직
+            //if ((element = (UIElement)GetHitImage(hand, btn_learn)) != null)         //StartBtn을 클릭하는 로직
+            //{
+            //    if (this._lastElement != null && element.Equals(this._lastElement))     //StartBtn에 계속하여 손을 대고 있는 경우
+            //    {
+            //        if (this._timer == null)
+            //        {
+            //            CreateTimer();
+            //        }
+            //        else if (this._ticks >= _hoverTime)
+            //        {
+            //            //윈도우 전환
+            //            RemoveTimer();
+
+            //            this.btn_learn_Click(btn_learn, new RoutedEventArgs());
+            //        }
+            //    }
+            //    else                    //새롭게 StartBtn에 손을 올린 경우
+            //    {
+            //        if (this._timer != null)
+            //            RemoveTimer();
+
+            //        CreateTimer();
+            //    }
+            //    _lastElement = element;
+            //}
+            //else if ((element = (UIElement)GetHitImage(hand, btn_quiz)) != null)
+            //{
+            //    if (this._lastElement != null && element.Equals(this._lastElement))     //StartBtn에 계속하여 손을 대고 있는 경우
+            //    {
+            //        if (this._timer == null)
+            //        {
+            //            CreateTimer();
+            //        }
+            //        else if (this._ticks >= _hoverTime)
+            //        {
+            //            //윈도우 전환
+            //            RemoveTimer();
+
+            //            //this.btn_quiz_Click(btn_quiz, new RoutedEventArgs());
+            //        }
+            //    }
+            //    else                    //새롭게 StartBtn에 손을 올린 경우
+            //    {
+            //        if (this._timer != null)
+            //            RemoveTimer();
+
+            //        CreateTimer();
+            //    }
+            //    _lastElement = element;
+            //}
+            //else 
+            if ((element = (UIElement)GetHitImage(hand, btn_back)) != null)     //ExitBtn을 클릭하는 로직
             {
-                QuizCloseHandler(this, new EventArgs());
+                if (this._lastElement != null && element.Equals(this._lastElement))     //계속해서 ExitBtn에 손을 대고 있는 경우
+                {
+                    if (this._timer == null)    //만일 타이머가 없으면 생성시킨다
+                    {
+                        CreateTimer();
+                    }
+                    else if (this._ticks >= _hoverTime)     //타이머가 있으나 특정 시간 이상 손을 댄 경우
+                    {
+                        RemoveTimer();
+                        btn_back_Click(btn_back, new RoutedEventArgs());
+                        //프로그램 종료
+                    }
+                }
+                else                         //새롭게 ExitBtn에 손을 댄 경우
+                {
+                    if (this._timer != null)            //만일 타이머가 기존에 존재하는 경우 이를 제거한후
+                    {
+                        RemoveTimer();
+                    }
+                    CreateTimer();                      //다시 타이머를 생성한다
+                }
+                _lastElement = element;                 //그리고 이전 element에 ExitBtn을 등록
+            }
+            else                                        //GameStartBtn이나 ExitBtn이 아닌 다른 부분에 손이 닿아져 있는 경우
+            {
+                if (this._lastElement != null)          //lastElement를 제거
+                    this._lastElement = null;
+
+                if (this._timer != null)                //타이머가 있는 경우에도 이를 제거
+                {
+                    RemoveTimer();
+                }
             }
         }
         #endregion TrackingMethods
+
+        #region TimerMethods
+        private void CreateTimer()
+        {
+            this._ticks = 0;
+            this._timer = new DispatcherTimer();
+            this._timer.Interval = TimeSpan.FromSeconds(0.1);
+            this._timer.Tick += new EventHandler(OnTimerTick);
+            this._timer.Start();
+        }
+
+        private void RemoveTimer()
+        {
+            this._timer.Stop();
+            this._timer.Tick -= OnTimerTick;
+            this._ticks = 0;
+            this._timer = null;
+        }
+
+        private void OnTimerTick(object sender, EventArgs e)
+        {
+            this._ticks++;
+        }
+        #endregion TimerMethods
 
         private void btn_back_Click(object sender, RoutedEventArgs e)
         {
