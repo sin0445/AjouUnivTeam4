@@ -62,6 +62,9 @@
     <Compile Include="Win_quiz.xaml.cs">
       <DependentUpon>Win_quiz.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Win_quiz_ani.xaml.cs">
+      <DependentUpon>Win_quiz_ani.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -84,6 +87,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Win_quiz.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Win_quiz_ani.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -132,6 +139,66 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\동식물.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_elephant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_giraffe.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_hippo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_lion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_monkey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_penguin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_pig.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_rabbit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_racoon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_elephant.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_giraffe.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_hippo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_lion.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_monkey.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_penguin.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_pig.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_rabbit.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_racoon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_next.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

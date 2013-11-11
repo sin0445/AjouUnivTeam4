@@ -25,6 +25,9 @@ namespace KinectEducationForKids
 
         #region MemberVariables
         private MainWindow _mainWindow;
+
+        private Win_quiz_ani _win_quiz_ani; 
+
         private Grid _layoutRoot;
         private Skeleton[] _Skeletons;
         private KinectSensor _KinectDevice;
@@ -339,6 +342,21 @@ namespace KinectEducationForKids
         private void btn_back_Click(object sender, RoutedEventArgs e)
         {
             this.QuizCloseHandler(this, new EventArgs());
+        }
+
+        private void btn_con_Click(object sender, RoutedEventArgs e)
+        {
+            this._win_quiz_ani = new Win_quiz_ani(_mainWindow);
+            this._win_quiz_ani.AniCloseHandler += AniClose;
+            this.view_quiz.Visibility = Visibility.Hidden;
+            _mainWindow.LayoutRoot.Children.Add(_win_quiz_ani);
+        }
+
+        public void AniClose(object sender, EventArgs e)
+        {
+            this.view_quiz.Visibility = Visibility.Visible;
+            _mainWindow.LayoutRoot.Children.Remove(this._win_quiz_ani);
+            this._win_quiz_ani = null;
         }
     }
 }
