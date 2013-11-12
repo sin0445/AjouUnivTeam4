@@ -56,8 +56,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CharacterListLibrary.cs" />
     <Compile Include="Win_learn.xaml.cs">
       <DependentUpon>Win_learn.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Win_learn_content.xaml.cs">
+      <DependentUpon>Win_learn_content.xaml</DependentUpon>
     </Compile>
     <Compile Include="Win_quiz.xaml.cs">
       <DependentUpon>Win_quiz.xaml</DependentUpon>
@@ -83,6 +87,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Win_learn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Win_learn_content.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

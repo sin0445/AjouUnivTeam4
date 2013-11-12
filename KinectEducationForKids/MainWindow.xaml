@@ -30,7 +30,7 @@
                             <ImageBrush ImageSource="/KinectEducationForKids;component/Images/한글퀴즈%20버튼.png" Stretch="Fill"/>
                         </Button.Background>
                     </Button>
-                    <Button Name="btn_exit" Grid.Column="0" Grid.Row="2" Margin="30">
+                    <Button Name="btn_exit" Grid.Column="0" Grid.Row="2" Margin="30" Click="btn_exit_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/KinectEducationForKids;component/Images/종료하기%20버튼.png" Stretch="Fill"/>
                         </Button.Background>

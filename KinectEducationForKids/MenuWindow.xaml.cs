@@ -217,34 +217,5 @@ namespace KinectEducationForKids
             }
         }
         #endregion TrackingMethods
-
-        //#region KinectDevice
-        //protected const string KinectDevicePropertyName = "KinectDevice";
-        //public static readonly DependencyProperty KinectDeviceProperty = DependencyProperty.Register(KinectDevicePropertyName, typeof(KinectSensor), typeof(MenuWindow), new PropertyMetadata(null, KinectDeviceChanged));
-
-        //public static void KinectDeviceChanged(DependencyObject owner, DependencyPropertyChangedEventArgs e)
-        //{
-        //    MenuWindow viewer = (MenuWindow)owner;
-
-        //    if (e.OldValue != null)
-        //    {
-        //        KinectSensor sensor;
-        //        sensor = (KinectSensor)e.NewValue;
-        //        sensor.SkeletonFrameReady -= viewer.KinectDevice_SkeletonFrameReady;
-        //    }
-
-        //    if (e.NewValue != null)
-        //    {
-        //        viewer.KinectDevice = (KinectSensor)e.NewValue;
-        //        viewer.KinectDevice.SkeletonFrameReady += viewer.KinectDevice_SkeletonFrameReady;
-        //    }
-        //}
-
-        //public KinectSensor KinectDevice
-        //{
-        //    get { return (KinectSensor)GetValue(KinectDeviceProperty); }
-        //    set { SetValue(KinectDeviceProperty, value); }
-        //}
-        //#endregion KinectDevice
     }
 }

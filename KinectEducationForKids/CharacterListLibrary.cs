@@ -25,15 +25,16 @@ namespace KinectEducationForKids
                     charList = getVowels();
                     break;
                 default:
-                    //Error Occur
+                    charList = null;
                     break;
             }
-            return null;
+            return charList;
         }
         private static List<CharacterBase> getConsonants()
         {
             List<CharacterBase> consList = new List<CharacterBase>();
             //여기다 기역부터 히읗까지 아래와 같은 방식으로 전부 추가 시키면 된다. 
+            consList.Add(new Nieun());
             consList.Add(new Digeuk());
             return consList;
         }
@@ -47,11 +48,12 @@ namespace KinectEducationForKids
 
     public abstract class CharacterBase
     {
+        public String CharacterName;
         public List<Point> DotList;
         public List<List<int>> StrokeDotIndex;
 
-        public virtual void setDotList() { }
-        public virtual void setStrokeDotIndex() { }
+        public abstract void setDotList();
+        public abstract void setStrokeDotIndex();
     }
 
     class Kiyeok : CharacterBase
@@ -72,8 +74,42 @@ namespace KinectEducationForKids
         }
     }
 
-    class Nieun : CharacterBase
+    public class Nieun : CharacterBase
     {
+        public Nieun()
+        {
+            this.DotList = new List<Point>();
+            this.StrokeDotIndex = new List<List<int>>();
+            this.CharacterName = "니은";
+            setDotList();
+            setStrokeDotIndex();
+        }
+
+        public override void setDotList()
+        {
+            this.DotList.Add(new Point(100, 100));
+            this.DotList.Add(new Point(100, 170));
+            this.DotList.Add(new Point(100, 240));
+            this.DotList.Add(new Point(100, 310));
+            this.DotList.Add(new Point(250, 310));
+            this.DotList.Add(new Point(400, 310));
+            this.DotList.Add(new Point(550, 310));
+            this.DotList.Add(new Point(700, 310));
+        }
+        public override void setStrokeDotIndex()
+        {
+            List<int> Stroke = new List<int>();
+
+            Stroke.Add(0);
+            Stroke.Add(1);
+            Stroke.Add(2);
+            Stroke.Add(3);
+            Stroke.Add(4);
+            Stroke.Add(5);
+            Stroke.Add(6);
+            Stroke.Add(7);
+            this.StrokeDotIndex.Add(Stroke);
+        }
     }
 
     public class Digeuk : CharacterBase
@@ -82,24 +118,25 @@ namespace KinectEducationForKids
         {
             this.DotList = new List<Point>();
             this.StrokeDotIndex = new List<List<int>>();
+            this.CharacterName = "디귿";
 
             setDotList();
             setStrokeDotIndex();
         }
         public override void setDotList()
         {
-            this.DotList.Add(new Point(500, 300));
-            this.DotList.Add(new Point(700, 300));
-            this.DotList.Add(new Point(900, 300));
-            this.DotList.Add(new Point(1100, 300));
-            this.DotList.Add(new Point(1300, 300));
-            this.DotList.Add(new Point(500, 533));
-            this.DotList.Add(new Point(500, 766));
-            this.DotList.Add(new Point(500, 1000));
-            this.DotList.Add(new Point(700, 1000));
-            this.DotList.Add(new Point(900, 1000));
-            this.DotList.Add(new Point(1100, 1000));
-            this.DotList.Add(new Point(1300, 1000));
+            this.DotList.Add(new Point(100, 100));
+            this.DotList.Add(new Point(250, 100));
+            this.DotList.Add(new Point(400, 100));
+            this.DotList.Add(new Point(550, 100));
+            this.DotList.Add(new Point(700, 100));
+            this.DotList.Add(new Point(100, 170));
+            this.DotList.Add(new Point(100, 240));
+            this.DotList.Add(new Point(100, 310));
+            this.DotList.Add(new Point(250, 310));
+            this.DotList.Add(new Point(400, 310));
+            this.DotList.Add(new Point(550, 310));
+            this.DotList.Add(new Point(700, 310));
         }
         public override void setStrokeDotIndex()
         {

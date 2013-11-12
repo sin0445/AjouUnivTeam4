@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="KinectEducationForKids.Win_learn_content"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Name="view_learn_content" Width="1200" Height="600">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Canvas x:Name="PuzzleBoardElement" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+
+            <Grid x:Name="CharacterNameDisplayElement" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Background="Cyan" Opacity="0.2">
+                <TextBlock x:Name="CharacterText" FontSize="40" Text="Character"/>
+            </Grid>
+
+            <StackPanel x:Name="ButtonBoardElement" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="btn_next" Width="200" Height="100" Margin="40" Click="btn_next_Click">
+                    <TextBlock Text="NEXT" FontSize="30"/>
+                </Button>
+                <Button x:Name="btn_back" Width="200" Height="100" Margin="40" Click="btn_back_Click">
+                    <TextBlock Text="BACK" FontSize="30"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        
+        <Canvas x:Name ="GameBoardElement">
+            <Image x:Name="HandCursorElement" Source="Images\HandCursor.png" Width="75" Height="75" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform x:Name="HandcursorScale" ScaleX="1"/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+        </Canvas>
+    </Grid>
+</UserControl>

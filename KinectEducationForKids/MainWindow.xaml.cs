@@ -268,8 +268,7 @@ namespace KinectEducationForKids
                     else if (this._ticks >= _hoverTime)     //타이머가 있으나 특정 시간 이상 손을 댄 경우
                     {
                         RemoveTimer();
-                        LayoutRoot.Children.Clear();
-                        Close();
+                        this.btn_exit_Click(btn_learn, new RoutedEventArgs());
                         //프로그램 종료
                     }
                 }
@@ -354,6 +353,12 @@ namespace KinectEducationForKids
             Main.Visibility = Visibility.Visible;
             LayoutRoot.Children.Remove(this.win_quiz);
             this.win_quiz = null;
+        }
+
+        private void btn_exit_Click(object sender, RoutedEventArgs e)
+        {
+            LayoutRoot.Children.Clear();
+            Close();
         }
     }
 }
