@@ -26,7 +26,7 @@ namespace KinectEducationForKids
         #region MemberVariables
         private MainWindow _mainWindow;
 
-        private Win_quiz_ani _win_quiz_ani; 
+        private Win_quiz_content _win_quiz_content; 
 
         private Grid _layoutRoot;
         private Skeleton[] _Skeletons;
@@ -344,19 +344,27 @@ namespace KinectEducationForKids
             this.QuizCloseHandler(this, new EventArgs());
         }
 
-        private void btn_con_Click(object sender, RoutedEventArgs e)
+        private void btn_animal_Click(object sender, RoutedEventArgs e)
         {
-            this._win_quiz_ani = new Win_quiz_ani(_mainWindow);
-            this._win_quiz_ani.AniCloseHandler += AniClose;
+            this._win_quiz_content = new Win_quiz_content(this._mainWindow, this._KinectController);
+            this._win_quiz_content.QuizContentCloseHandler += QuizContentClose;
             this.view_quiz.Visibility = Visibility.Hidden;
-            _mainWindow.LayoutRoot.Children.Add(_win_quiz_ani);
+            _mainWindow.LayoutRoot.Children.Add(_win_quiz_content);
         }
 
-        public void AniClose(object sender, EventArgs e)
+        private void btn_fruit_Click(object sender, RoutedEventArgs e)
+        {
+            this._win_quiz_content = new Win_quiz_content(this._mainWindow, this._KinectController);
+            this._win_quiz_content.QuizContentCloseHandler += QuizContentClose;
+            this.view_quiz.Visibility = Visibility.Hidden;
+            _mainWindow.LayoutRoot.Children.Add(_win_quiz_content);
+        }
+
+        public void QuizContentClose(object sender, EventArgs e)
         {
             this.view_quiz.Visibility = Visibility.Visible;
-            _mainWindow.LayoutRoot.Children.Remove(this._win_quiz_ani);
-            this._win_quiz_ani = null;
+            _mainWindow.LayoutRoot.Children.Remove(this._win_quiz_content);
+            this._win_quiz_content = null;
         }
     }
 }

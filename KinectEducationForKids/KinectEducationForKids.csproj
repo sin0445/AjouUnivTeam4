@@ -57,6 +57,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CharacterListLibrary.cs" />
+    <Compile Include="QuizElementListLibrary.cs" />
     <Compile Include="Win_learn.xaml.cs">
       <DependentUpon>Win_learn.xaml</DependentUpon>
     </Compile>
@@ -68,6 +69,9 @@
     </Compile>
     <Compile Include="Win_quiz_ani.xaml.cs">
       <DependentUpon>Win_quiz_ani.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Win_quiz_content.xaml.cs">
+      <DependentUpon>Win_quiz_content.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -99,6 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Win_quiz_ani.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Win_quiz_content.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

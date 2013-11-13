@@ -24,7 +24,7 @@
                 <TextBlock x:Name="CharacterText" FontSize="40" Text="Character"/>
             </Grid>
 
-            <StackPanel x:Name="ButtonBoardElement" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel x:Name="ButtonBoardElement" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
                 <Button x:Name="btn_next" Width="200" Height="100" Margin="40" Click="btn_next_Click">
                     <TextBlock Text="NEXT" FontSize="30"/>
                 </Button>
@@ -35,7 +35,7 @@
         </Grid>
         
         <Canvas x:Name ="GameBoardElement">
-            <Image x:Name="HandCursorElement" Source="Images\HandCursor.png" Width="75" Height="75" RenderTransformOrigin="0.5,0.5">
+            <Image x:Name="HandCursorElement" Source="Images\HandCursor.png" Width="50" Height="50" RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform x:Name="HandcursorScale" ScaleX="1"/>

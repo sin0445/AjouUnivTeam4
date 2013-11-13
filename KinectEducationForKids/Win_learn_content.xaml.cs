@@ -29,6 +29,8 @@ namespace KinectEducationForKids
         private KinectSensor _KinectDevice;
         private Grid _layoutRoot;
         private Skeleton[] _Skeletons;
+        private List<DependencyObject> hitResultsList;
+        private int count = 0;
 
         private UIElement _lastElement;
         private int _ticks;
@@ -64,6 +66,7 @@ namespace KinectEducationForKids
             this._KinectDevice = this._KinectController._KinectDevice;
             this._KinectDevice.SkeletonFrameReady += LearnContentWindow_SkeletonFrameReady;
             this._Skeletons = new Skeleton[this._KinectDevice.SkeletonStream.FrameSkeletonArrayLength];
+            this.hitResultsList = new List<DependencyObject>();
             //this.img_main.Width = _mainWindow.window.Width / 3;
             //this.grid.Width = _mainWindow.window.Width - this.img_main.Width;
             //this.grid.HorizontalAlignment = HorizontalAlignment.Right;
@@ -212,7 +215,6 @@ namespace KinectEducationForKids
                 Canvas.SetLeft(HandCursorElement, point.X);
                 Canvas.SetTop(HandCursorElement, point.Y);
 
-
                 if (hand.JointType == JointType.HandRight)
                 {
                     HandcursorScale.ScaleX = 1;
@@ -225,17 +227,31 @@ namespace KinectEducationForKids
         }
         private void TrackHandLocation(Joint hand)
         {
-            UIElement element;
+            Point targetPoint = GetJointPoint(hand);
+            double panelWidth = PuzzleBoardElement.ActualWidth;
+            double panelHeight = PuzzleBoardElement.ActualHeight;
 
-            if ((element = (UIElement)GetHitImage(hand, ButtonBoardElement)) != null)
+            if (targetPoint.X < panelWidth && targetPoint.Y < panelHeight)
             {
-                TrackHandLocationOnMenu(hand);
+                TrackHandLocationOnPuzzle(hand.Position);
             }
             else
             {
-                if (this._timer != null) RemoveTimer();
-                TrackHandLocationOnPuzzle(hand.Position);
+                TrackHandLocationOnMenu(hand);
             }
+            //if (GetHitPanel(hand, ButtonBoardElement) == true)
+            //{
+            //    TrackHandLocationOnMenu(hand);
+            //}
+            //else if (GetHitPanel(hand, PuzzleBoardElement) == true)
+            //{
+            //    if (this._timer != null) RemoveTimer();
+            //    TrackHandLocationOnPuzzle(hand.Position);
+            //}
+            //else
+            //{
+            //    if (this._timer != null) RemoveTimer();
+            //}
         }
 
         private void TrackHandLocationOnMenu(Joint hand)
@@ -326,10 +342,8 @@ namespace KinectEducationForKids
 
             if (this._StrokeDotIndex == this._CurrentStroke.Count && this._StrokeIndex == this._CurrentCharacter.StrokeDotIndex.Count)
             {
-                //DebugText.Text = "End";
                 //모든 점이 클릭된 상태
-                //만일 모든 글자 테스트를 마친 경우 완료 화면을 출력한 후 이전 화면으로 전환
-                //다음 글자가 남은 경우 현재 화면을 없앤 후 그 다음 글자를 따라 그릴 수 있도록 바꿔 주어야 한다.
+                btn_next_Click(btn_next, new RoutedEventArgs());
             }
             else
             {
@@ -337,7 +351,6 @@ namespace KinectEducationForKids
                 int lastPoint;
 
                 nextDot = this._CurrentCharacter.DotList[this._CurrentStroke[this._StrokeDotIndex]];
-                //DotLoc.Text = String.Format("x = {0}, y = {1}", nextDot.X, nextDot.Y);
 
                 DepthImagePoint point = this._KinectDevice.CoordinateMapper.MapSkeletonPointToDepthPoint(position, DepthImageFormat.Resolution640x480Fps30);
                 point.X = (int)(point.X * _layoutRoot.ActualWidth / this._KinectDevice.DepthStream.FrameWidth);
