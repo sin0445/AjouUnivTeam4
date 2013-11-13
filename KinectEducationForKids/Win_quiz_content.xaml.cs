@@ -35,23 +35,12 @@ namespace KinectEducationForKids
         private DispatcherTimer _buttonTimer;
         private const int _hoverTime = 20;
 
-        private List<string> btn_path = new List<string>();
-        private List<string> img_path = new List<string>();
-
-        private string[] list = { "elephant", "giraffe", "hippo", "lion", "monkey", "penguin", "pig", "rabbit", "racoon" };
-
-        private int prev_num = -1;
-
-        private int num_quiz = -1;
-        private int num_answer = -1;
-
-        private int wrong_num1 = -1;
-        private int wrong_num2 = -1;
-        private int wrong_num3 = -1;
+        private QuizElements _quizElements;
+        
         #endregion MemberVariables
 
         #region Constructor
-        public Win_quiz_content(MainWindow win, KinectController control)
+        public Win_quiz_content(MainWindow win, KinectController control, QuizElementListLibrary.QUIZTYPE type)
         {
             InitializeComponent();
 
@@ -62,16 +51,10 @@ namespace KinectEducationForKids
             this.Loaded += (s, e) => { InitQuizContentWindow(); };
             this.Unloaded += (s, e) => { UninitQuizContentWindow(); };
 
-            // image / button 추가
-            function_add();
-
-            // 문제 출제
-            making_quiz();
-
-            // layout 크기 수정
-            edit_layout();
+            _quizElements = QuizElementListLibrary.getQuizElements(type);
+            next_quiz();
         }
-
+        
         private void InitQuizContentWindow()
         {
             this._KinectDevice = this._KinectController._KinectDevice;
@@ -336,6 +319,8 @@ namespace KinectEducationForKids
         #endregion TimerMethods
 
         #region QuizMethods
+
+        // 크기 조정 함수
         private void edit_layout()
         {
             this.panel2.Width = this._mainWindow.window.Width;
@@ -354,132 +339,43 @@ namespace KinectEducationForKids
             this.grid.Height = this._mainWindow.window.Height - this.panel2.Height;
         }
 
-        private void function_add()
-        {
-            for (int i = 0; i < 9; i++)
-            {
-                string name = list[i];
-                btn_path.Add("btn_" + name + ".png");
-                img_path.Add("img_" + name + ".jpg");
-            }
-        }
-
-        private void making_quiz()
-        {
-            generating();
-
-            ImageSourceConverter imgConv = new ImageSourceConverter();
-
-            img_quiz.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + img_path[num_quiz].ToString());
-
-            switch (num_answer)
-            {
-                case 0:
-                    {
-                        quiz1.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[num_quiz].ToString());
-                        quiz2.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[wrong_num1].ToString());
-                        quiz3.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[wrong_num2].ToString());
-                        quiz4.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[wrong_num3].ToString());
-                        break;
-                    }
-                case 1:
-                    {
-                        quiz1.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[wrong_num1].ToString());
-                        quiz2.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[num_quiz].ToString());
-                        quiz3.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[wrong_num2].ToString());
-                        quiz4.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[wrong_num3].ToString());
-                        break;
-                    }
-                case 2:
-                    {
-                        quiz1.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[wrong_num1].ToString());
-                        quiz2.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[wrong_num2].ToString());
-                        quiz3.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[num_quiz].ToString());
-                        quiz4.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[wrong_num3].ToString());
-                        break;
-                    }
-                case 3:
-                    {
-                        quiz1.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[wrong_num1].ToString());
-                        quiz2.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[wrong_num2].ToString());
-                        quiz3.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[wrong_num3].ToString());
-                        quiz4.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + btn_path[num_quiz].ToString());
-                        break;
-                    }
-            }
-        }
-
-        private void generating()
-        {
-            int max = list.Length;
-
-            System.Random random = new System.Random();
-
-            bool flag = true;
-
-            do
-            {
-                num_quiz = random.Next(0, max);
-
-                if (num_quiz != prev_num)
-                {
-                    flag = false;
-                }
-            }
-            while (flag);
-
-            num_answer = random.Next(0, 4);
-
-            flag = true;
-            do
-            {
-                wrong_num1 = random.Next(0, max);
-
-                if ((wrong_num1 != num_quiz) && (wrong_num1 != wrong_num2) && (wrong_num1 != wrong_num3))
-                {
-                    flag = false;
-                }
-            }
-            while (flag);
-
-            flag = true;
-            do
-            {
-                wrong_num2 = random.Next(0, max);
-
-                if ((wrong_num2 != num_quiz) && (wrong_num2 != wrong_num1) && (wrong_num2 != wrong_num3))
-                {
-                    flag = false;
-                }
-            }
-            while (flag);
-
-            flag = true;
-            do
-            {
-                wrong_num3 = random.Next(0, max);
-
-                if ((wrong_num3 != num_quiz) && (wrong_num3 != wrong_num2) && (wrong_num3 != wrong_num2))
-                {
-                    flag = false;
-                }
-            }
-            while (flag);
-        }
-        
+        // 다음 문제 출제 함수
         private void next_quiz()
         {
-            prev_num = num_quiz;
+            // 모든 문제 출제시 프로그램 종료
+            if (_quizElements.isGameEnd())
+            {
+                this.QuizContentCloseHandler(this, new EventArgs());
+            }
 
-            // image / button 추가
-            function_add();
+            else
+            {
+                // 문제 출제 함수
+                _quizElements.SetQuiz();
 
-            // 문제 출제
-            making_quiz();
+                // 화면 출력 함수
+                MakingQuiz();
 
-            // layout 크기 수정
-            edit_layout();
+                // 크기 조정 함수
+                edit_layout();
+            }
         }
+
+        // 화면 출력 함수
+        private void MakingQuiz()
+        {
+            ImageSourceConverter imgConv = new ImageSourceConverter();
+
+            // 정답 element Image 출력
+            img_quiz.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _quizElements.QuizList[0].ToString());
+            
+            // 보기 element button 출력
+            quiz1.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _quizElements.QuizList[1].ToString());
+            quiz2.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _quizElements.QuizList[2].ToString());
+            quiz3.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _quizElements.QuizList[3].ToString());
+            quiz4.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _quizElements.QuizList[4].ToString());
+        }
+
         private void btn_1_Click(object sender, RoutedEventArgs e)
         {
             checking_answer(0);
@@ -502,7 +398,8 @@ namespace KinectEducationForKids
 
         private void checking_answer(int user_answer)
         {
-            if (user_answer == num_answer)
+            // 사용자 선택 답과 정답 비교
+            if (user_answer.ToString().Equals(_quizElements.QuizList[5]))
             {
                 next_quiz();
             }

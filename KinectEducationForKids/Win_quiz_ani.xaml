@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             Name="view_quiz_ani" Width="1200" Height="600">
+             Name="view_quiz_ani">
     <UserControl.Background>
         <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_back.png" />
     </UserControl.Background>
