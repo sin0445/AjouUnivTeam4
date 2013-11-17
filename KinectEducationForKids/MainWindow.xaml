@@ -9,7 +9,7 @@
     <Grid x:Name="LayoutRoot">
         <Grid x:Name="Main">
             <StackPanel Name="panel" Orientation="Horizontal">
-                <Image Name="img_main" Source="/KinectEducationForKids;component/Images/동식물.jpg" Stretch="Fill">
+                <Image Name="img_main" Source="/KinectEducationForKids;component/Images/img_main.jpg" Stretch="Fill">
                 </Image>
                 <Grid Name="grid" >
                     <Grid.ColumnDefinitions>
@@ -22,17 +22,17 @@
                     </Grid.RowDefinitions>
                     <Button Name="btn_learn" Grid.Column="0" Grid.Row="0" Margin="30" Click="btn_learn_Click">
                         <Button.Background>
-                            <ImageBrush ImageSource="/KinectEducationForKids;component/Images/한글쓰기%20버튼.png" Stretch="Fill"/>
+                            <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_writing.png" Stretch="Fill"/>
                         </Button.Background>
                     </Button>
                     <Button Name="btn_quiz" Grid.Column="0" Grid.Row="1" Margin="30" Click="btn_quiz_Click">
                         <Button.Background>
-                            <ImageBrush ImageSource="/KinectEducationForKids;component/Images/한글퀴즈%20버튼.png" Stretch="Fill"/>
+                            <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_quiz.png" Stretch="Fill"/>
                         </Button.Background>
                     </Button>
                     <Button Name="btn_exit" Grid.Column="0" Grid.Row="2" Margin="30" Click="btn_exit_Click">
                         <Button.Background>
-                            <ImageBrush ImageSource="/KinectEducationForKids;component/Images/종료하기%20버튼.png" Stretch="Fill"/>
+                            <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_exit.png" Stretch="Fill"/>
                         </Button.Background>
                     </Button>
                 </Grid>
