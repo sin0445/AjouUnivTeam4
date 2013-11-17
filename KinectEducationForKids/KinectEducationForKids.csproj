@@ -86,10 +86,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MenuWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Win_learn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -112,9 +108,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MenuWindow.xaml.cs">
-      <DependentUpon>MenuWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -131,6 +124,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -139,12 +133,45 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\btn_apple.png" />
+    <Resource Include="Images\btn_back.png" />
+    <Resource Include="Images\btn_banana.png" />
+    <Resource Include="Images\btn_elephant.png" />
+    <Resource Include="Images\btn_giraffe.png" />
+    <Resource Include="Images\btn_grape.png" />
+    <Resource Include="Images\btn_hippo.png" />
+    <Resource Include="Images\btn_kiwi.png" />
+    <Resource Include="Images\btn_lemon.png" />
+    <Resource Include="Images\btn_lion.png" />
+    <Resource Include="Images\btn_melon.png" />
+    <Resource Include="Images\btn_monkey.png" />
+    <Resource Include="Images\btn_next.png" />
+    <Resource Include="Images\btn_orange.png" />
+    <Resource Include="Images\btn_pear.png" />
+    <Resource Include="Images\btn_penguin.png" />
+    <Resource Include="Images\btn_pig.png" />
+    <Resource Include="Images\btn_rabbit.png" />
+    <Resource Include="Images\btn_racoon.png" />
     <Resource Include="Images\HandCursor.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Images\img_apple.jpg" />
+    <Resource Include="Images\img_banana.jpg" />
+    <Resource Include="Images\img_elephant.jpg" />
+    <Resource Include="Images\img_giraffe.jpg" />
+    <Resource Include="Images\img_grape.jpg" />
+    <Resource Include="Images\img_hippo.jpg" />
+    <Resource Include="Images\img_kiwi.jpg" />
+    <Resource Include="Images\img_lemon.jpg" />
+    <Resource Include="Images\img_lion.jpg" />
+    <Resource Include="Images\img_melon.jpg" />
+    <Resource Include="Images\img_monkey.jpg" />
+    <Resource Include="Images\img_orange.jpg" />
+    <Resource Include="Images\img_pear.jpg" />
+    <Resource Include="Images\img_penguin.jpg" />
+    <Resource Include="Images\img_pig.jpg" />
+    <Resource Include="Images\img_rabbit.jpg" />
+    <Resource Include="Images\img_racoon.jpg" />
     <Resource Include="Images\동물 버튼.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Images\동식물.jpg" />
     <Resource Include="Images\뒤로가기 버튼.png" />
     <Resource Include="Images\모음 버튼.png" />
     <Resource Include="Images\음식 버튼.png" />
@@ -154,67 +181,7 @@
     <Resource Include="Images\한글퀴즈 버튼.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\동식물.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_elephant.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_giraffe.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_hippo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_lion.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_monkey.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_penguin.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_pig.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_rabbit.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_racoon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_elephant.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_giraffe.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_hippo.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_lion.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_monkey.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_penguin.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_pig.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_rabbit.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_racoon.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_back.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_next.png" />
+    <Content Include="Media\hand_over.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

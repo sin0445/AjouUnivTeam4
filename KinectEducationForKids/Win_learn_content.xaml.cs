@@ -30,7 +30,6 @@ namespace KinectEducationForKids
         private Grid _layoutRoot;
         private Skeleton[] _Skeletons;
         private List<DependencyObject> hitResultsList;
-        private int count = 0;
 
         private UIElement _lastElement;
         private int _ticks;
