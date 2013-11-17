@@ -226,58 +226,57 @@ namespace KinectEducationForKids
             //손이 버튼위에 없는 경우
             //버튼에서 벗어난 경우(lastElement null, Timer stop후 null)
             //원래 밖에 있었던 경우(그냥 무시)
-            //if ((element = (UIElement)GetHitImage(hand, btn_learn)) != null)         //StartBtn을 클릭하는 로직
-            //{
-            //    if (this._lastElement != null && element.Equals(this._lastElement))     //StartBtn에 계속하여 손을 대고 있는 경우
-            //    {
-            //        if (this._timer == null)
-            //        {
-            //            CreateTimer();
-            //        }
-            //        else if (this._ticks >= _hoverTime)
-            //        {
-            //            //윈도우 전환
-            //            RemoveTimer();
+            if ((element = (UIElement)GetHitImage(hand, btn_animal)) != null)         //StartBtn을 클릭하는 로직
+            {
+                if (this._lastElement != null && element.Equals(this._lastElement))     //StartBtn에 계속하여 손을 대고 있는 경우
+                {
+                    if (this._timer == null)
+                    {
+                        CreateTimer();
+                    }
+                    else if (this._ticks >= _hoverTime)
+                    {
+                        //윈도우 전환
+                        RemoveTimer();
 
-            //            this.btn_learn_Click(btn_learn, new RoutedEventArgs());
-            //        }
-            //    }
-            //    else                    //새롭게 StartBtn에 손을 올린 경우
-            //    {
-            //        if (this._timer != null)
-            //            RemoveTimer();
+                        this.btn_animal_Click(btn_animal, new RoutedEventArgs());
+                    }
+                }
+                else                    //새롭게 StartBtn에 손을 올린 경우
+                {
+                    if (this._timer != null)
+                        RemoveTimer();
 
-            //        CreateTimer();
-            //    }
-            //    _lastElement = element;
-            //}
-            //else if ((element = (UIElement)GetHitImage(hand, btn_quiz)) != null)
-            //{
-            //    if (this._lastElement != null && element.Equals(this._lastElement))     //StartBtn에 계속하여 손을 대고 있는 경우
-            //    {
-            //        if (this._timer == null)
-            //        {
-            //            CreateTimer();
-            //        }
-            //        else if (this._ticks >= _hoverTime)
-            //        {
-            //            //윈도우 전환
-            //            RemoveTimer();
+                    CreateTimer();
+                }
+                _lastElement = element;
+            }
+            else if ((element = (UIElement)GetHitImage(hand, btn_fruit)) != null)
+            {
+                if (this._lastElement != null && element.Equals(this._lastElement))     //StartBtn에 계속하여 손을 대고 있는 경우
+                {
+                    if (this._timer == null)
+                    {
+                        CreateTimer();
+                    }
+                    else if (this._ticks >= _hoverTime)
+                    {
+                        //윈도우 전환
+                        RemoveTimer();
 
-            //            //this.btn_quiz_Click(btn_quiz, new RoutedEventArgs());
-            //        }
-            //    }
-            //    else                    //새롭게 StartBtn에 손을 올린 경우
-            //    {
-            //        if (this._timer != null)
-            //            RemoveTimer();
+                        this.btn_fruit_Click(btn_fruit, new RoutedEventArgs());
+                    }
+                }
+                else                    //새롭게 StartBtn에 손을 올린 경우
+                {
+                    if (this._timer != null)
+                        RemoveTimer();
 
-            //        CreateTimer();
-            //    }
-            //    _lastElement = element;
-            //}
-            //else 
-            if ((element = (UIElement)GetHitImage(hand, btn_back)) != null)     //ExitBtn을 클릭하는 로직
+                    CreateTimer();
+                }
+                _lastElement = element;
+            }
+            else if ((element = (UIElement)GetHitImage(hand, btn_back)) != null)     //ExitBtn을 클릭하는 로직
             {
                 if (this._lastElement != null && element.Equals(this._lastElement))     //계속해서 ExitBtn에 손을 대고 있는 경우
                 {
@@ -346,7 +345,7 @@ namespace KinectEducationForKids
 
         private void btn_animal_Click(object sender, RoutedEventArgs e)
         {
-            this._win_quiz_content = new Win_quiz_content(this._mainWindow, this._KinectController);
+            this._win_quiz_content = new Win_quiz_content(this._mainWindow, this._KinectController, QuizElementListLibrary.QUIZTYPE.ANIMAL);
             this._win_quiz_content.QuizContentCloseHandler += QuizContentClose;
             this.view_quiz.Visibility = Visibility.Hidden;
             _mainWindow.LayoutRoot.Children.Add(_win_quiz_content);
@@ -354,7 +353,7 @@ namespace KinectEducationForKids
 
         private void btn_fruit_Click(object sender, RoutedEventArgs e)
         {
-            this._win_quiz_content = new Win_quiz_content(this._mainWindow, this._KinectController);
+            this._win_quiz_content = new Win_quiz_content(this._mainWindow, this._KinectController, QuizElementListLibrary.QUIZTYPE.FRUIT);
             this._win_quiz_content.QuizContentCloseHandler += QuizContentClose;
             this.view_quiz.Visibility = Visibility.Hidden;
             _mainWindow.LayoutRoot.Children.Add(_win_quiz_content);

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Random;
 
 namespace KinectEducationForKids
 {
@@ -99,7 +98,7 @@ namespace KinectEducationForKids
             List<string> imgPathList = new List<string>();
             for (int i = 0; i < elementList.Count; i++)
             {
-                imgPathList.Add("img_" + elementList[i] + ".png");
+                imgPathList.Add("img_" + elementList[i] + ".jpg");
             }
             return imgPathList;
         }
