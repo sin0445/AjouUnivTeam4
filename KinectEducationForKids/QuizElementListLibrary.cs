@@ -35,7 +35,16 @@ namespace KinectEducationForKids
                     elements = new QuizElements(QuizElementList);
                     break;
                 case QUIZTYPE.FRUIT:
-                    elements = null;
+                    QuizElementList.Add("apple");
+                    QuizElementList.Add("banana");
+                    QuizElementList.Add("grape");
+                    QuizElementList.Add("kiwi");
+                    QuizElementList.Add("lemon");
+                    QuizElementList.Add("melon");
+                    QuizElementList.Add("orange");
+                    QuizElementList.Add("pear");
+
+                    elements = new QuizElements(QuizElementList);
                     break;
                 default:
                     elements = null;
