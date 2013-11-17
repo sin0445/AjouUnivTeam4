@@ -133,6 +133,18 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\btn_animal.png" />
+    <Resource Include="Images\btn_back2.png" />
+    <Resource Include="Images\btn_cons.png" />
+    <Resource Include="Images\btn_exit.png" />
+    <Resource Include="Images\btn_fruit.png" />
+    <Resource Include="Images\btn_quiz.png" />
+    <Resource Include="Images\btn_vowel.png" />
+    <Resource Include="Images\btn_writing.png" />
+    <Resource Include="Images\img_main.jpg" />
+    <Content Include="Media\hand_over.wav" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Images\btn_apple.png" />
     <Resource Include="Images\btn_back.png" />
     <Resource Include="Images\btn_banana.png" />
@@ -170,66 +182,6 @@
     <Resource Include="Images\img_pig.jpg" />
     <Resource Include="Images\img_rabbit.jpg" />
     <Resource Include="Images\img_racoon.jpg" />
-    <Resource Include="Images\동물 버튼.png" />
-    <Resource Include="Images\동식물.jpg" />
-    <Resource Include="Images\뒤로가기 버튼.png" />
-    <Resource Include="Images\모음 버튼.png" />
-    <Resource Include="Images\음식 버튼.png" />
-    <Resource Include="Images\자음 버튼.png" />
-    <Resource Include="Images\종료하기 버튼.png" />
-    <Resource Include="Images\한글쓰기 버튼.png" />
-    <Resource Include="Images\한글퀴즈 버튼.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Media\hand_over.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_apple.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_banana.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_grape.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_kiwi.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_lemon.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_melon.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_orange.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\img_pear.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_apple.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_banana.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_grape.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_kiwi.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_lemon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_melon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_orange.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\btn_pear.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
