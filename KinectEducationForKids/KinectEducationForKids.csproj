@@ -183,6 +183,54 @@
   <ItemGroup>
     <Content Include="Media\hand_over.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_apple.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_banana.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_grape.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_kiwi.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_lemon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_melon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_orange.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\img_pear.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_apple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_banana.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_grape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_kiwi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_lemon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_melon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_orange.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_pear.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
