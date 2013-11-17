@@ -217,8 +217,19 @@ namespace KinectEducationForKids
         }
         private void TrackHandLocation(Joint hand)
         {
-            TrackHandLocationOnButton(hand);
-            //TrackingHandLocationOnQuiz(hand);
+            Point handPoint = GetJointPoint(hand);
+            if (handPoint.X <= img_quiz.ActualWidth && handPoint.Y <= img_quiz.ActualHeight)
+            {
+                //Do Nothing
+            }
+            else if(handPoint.X > img_quiz.ActualWidth && handPoint.Y <= img_quiz.ActualHeight)
+            {
+                TrackHandLocationOnButton(hand);
+            }
+            else if(handPoint.Y > img_quiz.ActualHeight)
+            {
+                TrackHandLocationOnQuiz(hand);
+            }
         }
         private void TrackHandLocationOnButton(Joint hand)
         {
@@ -268,6 +279,129 @@ namespace KinectEducationForKids
                     {
                         RemoveTimer();
                         this.btn_back_Click(btn_back, new RoutedEventArgs());
+                        //프로그램 종료
+                    }
+                }
+                else                         //새롭게 ExitBtn에 손을 댄 경우
+                {
+                    if (this._buttonTimer != null)            //만일 타이머가 기존에 존재하는 경우 이를 제거한후
+                    {
+                        RemoveTimer();
+                    }
+                    CreateTimer();                      //다시 타이머를 생성한다
+                }
+                _lastElement = element;                 //그리고 이전 element에 ExitBtn을 등록
+            }
+            else                                        //GameStartBtn이나 ExitBtn이 아닌 다른 부분에 손이 닿아져 있는 경우
+            {
+                if (this._lastElement != null)          //lastElement를 제거
+                    this._lastElement = null;
+
+                if (this._buttonTimer != null)                //타이머가 있는 경우에도 이를 제거
+                {
+                    RemoveTimer();
+                }
+            }
+        }
+
+        private void TrackHandLocationOnQuiz(Joint hand)
+        {
+            UIElement element;
+            //손이 버튼 위에 있는 경우
+            //계속 버튼위에 있는 경우(Timer 체크 후 일정 시간 이상 지나면 현재 윈도우 hidden 후 메뉴창 add) 
+            //새로운 버튼위에 있는 경우(Timer 초기화 후 lastElement에 현재 버튼 등록)
+
+            //손이 버튼위에 없는 경우
+            //버튼에서 벗어난 경우(lastElement null, Timer stop후 null)
+            //원래 밖에 있었던 경우(그냥 무시)
+
+            if ((element = (UIElement)GetHitImage(hand, btn_1)) != null)         //StartBtn을 클릭하는 로직
+            {
+                if (this._lastElement != null && element.Equals(this._lastElement))     //StartBtn에 계속하여 손을 대고 있는 경우
+                {
+                    if (this._buttonTimer == null)
+                    {
+                        CreateTimer();
+                    }
+                    else if (this._ticks >= _hoverTime)
+                    {
+                        //윈도우 전환
+                        RemoveTimer();
+
+                        this.btn_1_Click(btn_1, new RoutedEventArgs());
+                    }
+                }
+                else                    //새롭게 StartBtn에 손을 올린 경우
+                {
+                    if (this._buttonTimer != null)
+                        RemoveTimer();
+
+                    CreateTimer();
+                }
+                _lastElement = element;
+            }
+            else if ((element = (UIElement)GetHitImage(hand, btn_2)) != null)     //ExitBtn을 클릭하는 로직
+            {
+                if (this._lastElement != null && element.Equals(this._lastElement))     //계속해서 ExitBtn에 손을 대고 있는 경우
+                {
+                    if (this._buttonTimer == null)    //만일 타이머가 없으면 생성시킨다
+                    {
+                        CreateTimer();
+                    }
+                    else if (this._ticks >= _hoverTime)     //타이머가 있으나 특정 시간 이상 손을 댄 경우
+                    {
+                        RemoveTimer();
+                        this.btn_2_Click(btn_2, new RoutedEventArgs());
+                        //프로그램 종료
+                    }
+                }
+                else                         //새롭게 ExitBtn에 손을 댄 경우
+                {
+                    if (this._buttonTimer != null)            //만일 타이머가 기존에 존재하는 경우 이를 제거한후
+                    {
+                        RemoveTimer();
+                    }
+                    CreateTimer();                      //다시 타이머를 생성한다
+                }
+                _lastElement = element;                 //그리고 이전 element에 ExitBtn을 등록
+            }
+            else if ((element = (UIElement)GetHitImage(hand, btn_3)) != null)     //ExitBtn을 클릭하는 로직
+            {
+                if (this._lastElement != null && element.Equals(this._lastElement))     //계속해서 ExitBtn에 손을 대고 있는 경우
+                {
+                    if (this._buttonTimer == null)    //만일 타이머가 없으면 생성시킨다
+                    {
+                        CreateTimer();
+                    }
+                    else if (this._ticks >= _hoverTime)     //타이머가 있으나 특정 시간 이상 손을 댄 경우
+                    {
+                        RemoveTimer();
+                        this.btn_3_Click(btn_3, new RoutedEventArgs());
+                        //프로그램 종료
+                    }
+                }
+                else                         //새롭게 ExitBtn에 손을 댄 경우
+                {
+                    if (this._buttonTimer != null)            //만일 타이머가 기존에 존재하는 경우 이를 제거한후
+                    {
+                        RemoveTimer();
+                    }
+                    CreateTimer();                      //다시 타이머를 생성한다
+                }
+                _lastElement = element;                 //그리고 이전 element에 ExitBtn을 등록
+            }
+            else if ((element = (UIElement)GetHitImage(hand, btn_4)) != null)     //ExitBtn을 클릭하는 로직
+            {
+                if (this._lastElement != null && element.Equals(this._lastElement))     //계속해서 ExitBtn에 손을 대고 있는 경우
+                {
+                    if (this._buttonTimer == null)    //만일 타이머가 없으면 생성시킨다
+                    {
+                        CreateTimer();
+                    }
+                    else if (this._ticks >= _hoverTime)     //타이머가 있으나 특정 시간 이상 손을 댄 경우
+                    {
+                        RemoveTimer();
+                        this.btn_4_Click(btn_4, new RoutedEventArgs());
                         //프로그램 종료
                     }
                 }
