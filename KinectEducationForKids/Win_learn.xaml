@@ -7,7 +7,7 @@
              d:DesignHeight="300" d:DesignWidth="300" Name="view_learn">
     <Grid x:Name="grid_learn">
         <StackPanel Name="panel" Orientation="Horizontal">
-            <Image Name="img_main" Source="/KinectEducationForKids;component/Images/동식물.jpg" Stretch="Fill">
+            <Image Name="img_main" Source="/KinectEducationForKids;component/Images/img_main.jpg" Stretch="Fill">
             </Image>
             <Grid Name="grid" >
                 <Grid.ColumnDefinitions>
@@ -20,23 +20,23 @@
                 </Grid.RowDefinitions>
                 <Button Name="btn_con" Grid.Column="0" Grid.Row="0" Margin="30" Click="btn_con_Click">
                     <Button.Background>
-                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/자음%20버튼.png" Stretch="Fill"/>
+                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_vowel.png" Stretch="Fill"/>
                     </Button.Background>
                 </Button>
                 <Button Name="btn_vow" Grid.Column="0" Grid.Row="1" Margin="30" Click="btn_vow_Click">
                     <Button.Background>
-                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/모음%20버튼.png" Stretch="Fill"/>
+                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_cons.png" Stretch="Fill"/>
                     </Button.Background>
                 </Button>
                 <Button Name="btn_back" Grid.Column="0" Grid.Row="2" Margin="30" Click="btn_back_Click">
                     <Button.Background>
-                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/뒤로가기%20버튼.png" Stretch="Fill"/>
+                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_back.png" Stretch="Fill"/>
                     </Button.Background>
                 </Button>
             </Grid>
         </StackPanel>
         <Canvas x:Name="GameBoardElement">
-            <Image x:Name="HandCursorElement" Source="Images/HandCursor.png" Width="50" Height="50" RenderTransformOrigin="0.5,0.5">
+            <Image x:Name="HandCursorElement" Source="/KinectEducationForKids;component/Images/HandCursor.png" Width="50" Height="50" RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform x:Name="HandcursorScale" ScaleX="1"/>

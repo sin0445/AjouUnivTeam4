@@ -7,7 +7,7 @@
              d:DesignHeight="300" d:DesignWidth="300"         Name="view_quiz">
     <Grid x:Name="grid_quiz">
         <StackPanel Name="panel" Orientation="Horizontal">
-            <Image Name="img_main" Source="/KinectEducationForKids;component/Images/동식물.jpg" Stretch="Fill">
+            <Image Name="img_main" Source="/KinectEducationForKids;component/Images/img_main.jpg" Stretch="Fill">
             </Image>
             <Grid Name="grid" >
                 <Grid.ColumnDefinitions>
@@ -20,17 +20,17 @@
                 </Grid.RowDefinitions>
                 <Button Name="btn_animal" Grid.Column="0" Grid.Row="0" Margin="30" Click="btn_animal_Click">
                     <Button.Background>
-                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/동물%20버튼.png" Stretch="Fill"/>
+                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_animal.png" Stretch="Fill"/>
                     </Button.Background>
                 </Button>
                 <Button Name="btn_fruit" Grid.Column="0" Grid.Row="1" Margin="30" Click="btn_fruit_Click">
                     <Button.Background>
-                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/음식%20버튼.png" Stretch="Fill"/>
+                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_fruit.png" Stretch="Fill"/>
                     </Button.Background>
                 </Button>
                 <Button Name="btn_back" Grid.Column="0" Grid.Row="2" Margin="30" Click="btn_back_Click">
                     <Button.Background>
-                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/뒤로가기%20버튼.png" Stretch="Fill"/>
+                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_back.png" Stretch="Fill"/>
                     </Button.Background>
                 </Button>
             </Grid>

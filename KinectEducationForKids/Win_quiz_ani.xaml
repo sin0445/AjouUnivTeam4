@@ -5,9 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              Name="view_quiz_ani">
-    <UserControl.Background>
-        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_back.png" />
-    </UserControl.Background>
     <StackPanel Name="panel1" Orientation="Vertical" Width="Auto" Height="Auto">
         <StackPanel Name="panel2" Orientation="Horizontal" Width="Auto" Height="Auto">
             <Image x:Name="img_quiz" Stretch="Fill" Margin="30">
@@ -15,7 +12,7 @@
             <StackPanel Name="panel3" Orientation="Vertical" Width="Auto" Height="Auto">
                 <Button Name="btn_back" Click="btn_back_Click" Width="Auto" Height="Auto" Margin="30">
                     <Button.Background>
-                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_back.png" />
+                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_back2.png" />
                     </Button.Background>
                 </Button>
                 <Button Name="btn_next" Width="Auto" Height="Auto" Margin="30" Click="btn_next_Click">

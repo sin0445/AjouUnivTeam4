@@ -13,7 +13,7 @@
                 <StackPanel Name="panel3" Orientation="Vertical" Width="Auto" Height="Auto">
                     <Button Name="btn_back" Click="btn_back_Click" Width="Auto" Height="Auto" Margin="30">
                         <Button.Background>
-                            <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_back.png" />
+                            <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_back2.png" />
                         </Button.Background>
                     </Button>
                     <Button Name="btn_next" Width="Auto" Height="Auto" Margin="30" Click="btn_next_Click">
