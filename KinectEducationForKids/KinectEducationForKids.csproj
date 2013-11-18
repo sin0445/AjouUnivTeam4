@@ -142,6 +142,7 @@
     <Resource Include="Images\btn_vowel.png" />
     <Resource Include="Images\btn_writing.png" />
     <Resource Include="Images\img_main.jpg" />
+    <Resource Include="Images\btn_prev.jpg" />
     <Content Include="Media\hand_over.wav" />
   </ItemGroup>
   <ItemGroup>
