@@ -44,6 +44,8 @@ namespace KinectEducationForKids
         private List<int> _CurrentStroke;
         private Polyline _CrayonElement;
         private Brush _brush;
+
+        private string _img_path;
         #endregion MemberVariables
 
         #region Constructor
@@ -471,6 +473,11 @@ namespace KinectEducationForKids
                     Canvas.SetTop(dotContainer, character.DotList[i].Y - (dotContainer.Height / 2));
                     Canvas.SetLeft(dotContainer, character.DotList[i].X - (dotContainer.Width / 2));
                     PuzzleBoardElement.Children.Add(dotContainer);
+
+                    _img_path = this._CurrentCharacter.getPath();
+
+                    ImageSourceConverter imgConv = new ImageSourceConverter();
+                    img_word.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _img_path.ToString());
                 }
             }
         }

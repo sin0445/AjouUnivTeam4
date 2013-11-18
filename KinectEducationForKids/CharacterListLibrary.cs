@@ -54,6 +54,7 @@ namespace KinectEducationForKids
 
         public abstract void setDotList();
         public abstract void setStrokeDotIndex();
+        public abstract string getPath();
     }
 
     class Kiyeok : CharacterBase
@@ -72,6 +73,11 @@ namespace KinectEducationForKids
         public override void setStrokeDotIndex()
         {
         }
+
+        public override string getPath()
+        {
+            return "con_1.png";
+        }
     }
 
     public class Nieun : CharacterBase
@@ -87,14 +93,14 @@ namespace KinectEducationForKids
 
         public override void setDotList()
         {
-            this.DotList.Add(new Point(100, 100));
-            this.DotList.Add(new Point(100, 170));
-            this.DotList.Add(new Point(100, 240));
-            this.DotList.Add(new Point(100, 310));
-            this.DotList.Add(new Point(250, 310));
-            this.DotList.Add(new Point(400, 310));
-            this.DotList.Add(new Point(550, 310));
-            this.DotList.Add(new Point(700, 310));
+            this.DotList.Add(new Point(100, 250));
+            this.DotList.Add(new Point(100, 320));
+            this.DotList.Add(new Point(100, 390));
+            this.DotList.Add(new Point(100, 460));
+            this.DotList.Add(new Point(250, 460));
+            this.DotList.Add(new Point(400, 460));
+            this.DotList.Add(new Point(550, 460));
+            this.DotList.Add(new Point(700, 460));
         }
         public override void setStrokeDotIndex()
         {
@@ -109,6 +115,11 @@ namespace KinectEducationForKids
             Stroke.Add(6);
             Stroke.Add(7);
             this.StrokeDotIndex.Add(Stroke);
+        }
+
+        public override string getPath()
+        {
+            return "con_2.png";
         }
     }
 
@@ -125,18 +136,18 @@ namespace KinectEducationForKids
         }
         public override void setDotList()
         {
-            this.DotList.Add(new Point(100, 100));
-            this.DotList.Add(new Point(250, 100));
-            this.DotList.Add(new Point(400, 100));
-            this.DotList.Add(new Point(550, 100));
-            this.DotList.Add(new Point(700, 100));
-            this.DotList.Add(new Point(100, 170));
-            this.DotList.Add(new Point(100, 240));
-            this.DotList.Add(new Point(100, 310));
-            this.DotList.Add(new Point(250, 310));
-            this.DotList.Add(new Point(400, 310));
-            this.DotList.Add(new Point(550, 310));
-            this.DotList.Add(new Point(700, 310));
+            this.DotList.Add(new Point(100, 250));
+            this.DotList.Add(new Point(250, 250));
+            this.DotList.Add(new Point(400, 250));
+            this.DotList.Add(new Point(550, 250));
+            this.DotList.Add(new Point(700, 250));
+            this.DotList.Add(new Point(100, 320));
+            this.DotList.Add(new Point(100, 390));
+            this.DotList.Add(new Point(100, 460));
+            this.DotList.Add(new Point(250, 460));
+            this.DotList.Add(new Point(400, 460));
+            this.DotList.Add(new Point(550, 460));
+            this.DotList.Add(new Point(700, 460));
         }
         public override void setStrokeDotIndex()
         {
@@ -160,6 +171,11 @@ namespace KinectEducationForKids
             Stroke.Add(10);
             Stroke.Add(11);
             this.StrokeDotIndex.Add(Stroke);
+        }
+
+        public override string getPath()
+        {
+            return "con_3.png";
         }
     }
 }

@@ -26,8 +26,7 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Image Name="img_word" Grid.Row="0" Grid.Column="0">
-                </Image>
+                <Image Name="img_word" Grid.Row="0" Grid.Column="0" Stretch="Fill"/>
                 <Canvas x:Name="PuzzleBoardElement" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" />
             </Grid>
         </StackPanel>

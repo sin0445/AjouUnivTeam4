@@ -143,6 +143,30 @@
     <Resource Include="Images\btn_writing.png" />
     <Resource Include="Images\img_main.jpg" />
     <Resource Include="Images\btn_prev.jpg" />
+    <Resource Include="Images\con_1.png" />
+    <Resource Include="Images\con_2.png" />
+    <Resource Include="Images\con_3.png" />
+    <Resource Include="Images\con_4.png" />
+    <Resource Include="Images\con_5.png" />
+    <Resource Include="Images\con_6.png" />
+    <Resource Include="Images\con_7.png" />
+    <Resource Include="Images\con_8.png" />
+    <Resource Include="Images\con_9.png" />
+    <Resource Include="Images\con_10.png" />
+    <Resource Include="Images\con_11.png" />
+    <Resource Include="Images\con_12.png" />
+    <Resource Include="Images\con_13.png" />
+    <Resource Include="Images\con_14.png" />
+    <Resource Include="Images\vow_1.png" />
+    <Resource Include="Images\vow_2.png" />
+    <Resource Include="Images\vow_3.png" />
+    <Resource Include="Images\vow_4.png" />
+    <Resource Include="Images\vow_5.png" />
+    <Resource Include="Images\vow_6.png" />
+    <Resource Include="Images\vow_7.png" />
+    <Resource Include="Images\vow_8.png" />
+    <Resource Include="Images\vow_9.png" />
+    <Resource Include="Images\vow_10.png" />
     <Content Include="Media\hand_over.wav" />
   </ItemGroup>
   <ItemGroup>
