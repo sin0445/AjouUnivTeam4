@@ -29,7 +29,6 @@ namespace KinectEducationForKids
         private KinectSensor _KinectDevice;
         private Grid _layoutRoot;
         private Skeleton[] _Skeletons;
-        private List<DependencyObject> hitResultsList;
 
         private UIElement _lastElement;
         private int _ticks;
@@ -37,13 +36,16 @@ namespace KinectEducationForKids
         private const int _hoverTime = 20;
 
         private List<CharacterBase> _CharacterList;
-        private int _CharacterIndex;
-        private int _StrokeDotIndex;
-        private int _StrokeIndex;
+        private int _CharacterIndex;                //글자 리스트 중 몇 번째 글자를 제공중인지를 알려주는 인덱스
+        private int _StrokeDotIndex;                //현재 획수에 몇 번째 점에 손을 대어야 하는지를 알려주는 인덱스
+        private int _StrokeIndex;                   //그려야할 획수를 나타내주는 인덱스
         private CharacterBase _CurrentCharacter;
         private List<int> _CurrentStroke;
         private Polyline _CrayonElement;
+        private Brush[] _BrushPallete;
         private Brush _brush;
+        private Ellipse _NextDot;
+        private Random _BrushPicker;
 
         private string _img_path;
         #endregion MemberVariables
@@ -67,10 +69,6 @@ namespace KinectEducationForKids
             this._KinectDevice = this._KinectController._KinectDevice;
             this._KinectDevice.SkeletonFrameReady += LearnContentWindow_SkeletonFrameReady;
             this._Skeletons = new Skeleton[this._KinectDevice.SkeletonStream.FrameSkeletonArrayLength];
-            this.hitResultsList = new List<DependencyObject>();
-            //this.img_main.Width = _mainWindow.window.Width / 3;
-            //this.grid.Width = _mainWindow.window.Width - this.img_main.Width;
-            //this.grid.HorizontalAlignment = HorizontalAlignment.Right;
         }
         private void UninitLearnContentWindow()
         {
@@ -240,19 +238,6 @@ namespace KinectEducationForKids
             {
                 TrackHandLocationOnMenu(hand);
             }
-            //if (GetHitPanel(hand, ButtonBoardElement) == true)
-            //{
-            //    TrackHandLocationOnMenu(hand);
-            //}
-            //else if (GetHitPanel(hand, PuzzleBoardElement) == true)
-            //{
-            //    if (this._timer != null) RemoveTimer();
-            //    TrackHandLocationOnPuzzle(hand.Position);
-            //}
-            //else
-            //{
-            //    if (this._timer != null) RemoveTimer();
-            //}
         }
 
         private void TrackHandLocationOnMenu(Joint hand)
@@ -265,9 +250,33 @@ namespace KinectEducationForKids
             //손이 버튼위에 없는 경우
             //버튼에서 벗어난 경우(lastElement null, Timer stop후 null)
             //원래 밖에 있었던 경우(그냥 무시)
-           if ((element = (UIElement)GetHitImage(hand, btn_next)) != null)
+            if ((element = (UIElement)GetHitImage(hand, btn_prev)) != null)
             {
-                if (this._lastElement != null && element.Equals(this._lastElement))     //StartBtn에 계속하여 손을 대고 있는 경우
+                if (this._lastElement != null && element.Equals(this._lastElement))     //btn_next에 계속하여 손을 대고 있는 경우
+                {
+                    if (this._timer == null)
+                    {
+                        CreateTimer();
+                    }
+                    else if (this._ticks >= _hoverTime)
+                    {
+                        //윈도우 전환
+                        RemoveTimer();
+                        btn_prev_Click(btn_next, new RoutedEventArgs());
+                    }
+                }
+                else                    //새롭게 StartBtn에 손을 올린 경우
+                {
+                    if (this._timer != null)
+                        RemoveTimer();
+
+                    CreateTimer();
+                }
+                _lastElement = element;
+            }
+            else if ((element = (UIElement)GetHitImage(hand, btn_next)) != null)
+            {
+                if (this._lastElement != null && element.Equals(this._lastElement))     //btn_next에 계속하여 손을 대고 있는 경우
                 {
                     if (this._timer == null)
                     {
@@ -400,7 +409,15 @@ namespace KinectEducationForKids
                         {
                             this._CurrentStroke = this._CurrentCharacter.StrokeDotIndex[this._StrokeIndex];     //획을 갱신하고
                             this._StrokeDotIndex = 0;       //점 카운트를 초기화
+                            ExtendNextDotCircle(this._CurrentStroke[this._StrokeDotIndex]);
                         }
+                    }
+                    else            //현재 획 내에 안 그린 점이 존재하는 경우
+                    {
+                        /*
+                         * 그 다음 점을 크게 만들어 주는 구문
+                         */
+                        ExtendNextDotCircle(this._CurrentStroke[this._StrokeDotIndex]);
                     }
                 }
                 else        //손의 위치가 점에서 멀리 떨어져 있을 경우
@@ -424,7 +441,11 @@ namespace KinectEducationForKids
         {
             this._CharacterIndex = 0;
             this._CharacterList = CharacterListLibrary.getCharacters(type);
-            this._brush = Brushes.Aqua;
+
+            this._BrushPallete = new []{Brushes.Black, Brushes.BlueViolet, Brushes.Crimson, Brushes.ForestGreen, Brushes.HotPink, 
+                                        Brushes.Khaki, Brushes.Yellow, Brushes.Violet, Brushes.Orange, Brushes.Navy, Brushes.Aqua};
+            this._BrushPicker = new Random();
+            
             SettingNextPuzzle();
         }
 
@@ -432,18 +453,39 @@ namespace KinectEducationForKids
         {
             if (this._CharacterIndex < this._CharacterList.Count)
             {
+                this._brush = this._BrushPallete[this._BrushPicker.Next(this._BrushPallete.Length - 1)];
+
                 this._CurrentCharacter = this._CharacterList[this._CharacterIndex++];
                 this._StrokeDotIndex = 0;
                 this._StrokeIndex = 0;
                 this._CurrentStroke = this._CurrentCharacter.StrokeDotIndex[this._StrokeIndex];
                 DrawCharacterDots(this._CurrentCharacter);
+
+                ExtendNextDotCircle(this._StrokeDotIndex);
+            }
+        }
+
+        private void SettingPrevPuzzle()
+        {
+            if (this._CharacterIndex > 0)
+            {
+                this._brush = this._BrushPallete[this._BrushPicker.Next(this._BrushPallete.Length - 1)];
+
+                this._CurrentCharacter = this._CharacterList[--this._CharacterIndex];
+                this._StrokeDotIndex = 0;
+                this._StrokeIndex = 0;
+                this._CurrentStroke = this._CurrentCharacter.StrokeDotIndex[this._StrokeIndex];
+                DrawCharacterDots(this._CurrentCharacter);
+
+                ExtendNextDotCircle(this._StrokeDotIndex);
             }
         }
 
         private void RemoveCurrentPuzzle()
         {
             PuzzleBoardElement.Children.Clear();
-            this._CrayonElement.Points.Clear();
+            if(this._CrayonElement != null)
+                this._CrayonElement.Points.Clear();
         }
 
         private void DrawCharacterDots(CharacterBase character)
@@ -456,18 +498,9 @@ namespace KinectEducationForKids
                 {
                     //점을 만들어주는 구문
                     Grid dotContainer = new Grid();
-                    dotContainer.Width = 50;
-                    dotContainer.Height = 50;
+                    dotContainer.Width = 25;
+                    dotContainer.Height = 25;
                     dotContainer.Children.Add(new Ellipse() { Fill = Brushes.Gray });
-
-                    //각 점에 표시될 숫자 입력
-                    TextBlock dotLabel = new TextBlock();
-                    dotLabel.Text = (i + 1).ToString();
-                    dotLabel.Foreground = Brushes.White;
-                    dotLabel.FontSize = 24;
-                    dotLabel.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-                    dotLabel.VerticalAlignment = System.Windows.VerticalAlignment.Center;
-                    dotContainer.Children.Add(dotLabel);
 
                     //Poisition the UI element centered on the dot point
                     Canvas.SetTop(dotContainer, character.DotList[i].Y - (dotContainer.Height / 2));
@@ -480,6 +513,26 @@ namespace KinectEducationForKids
                     img_word.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _img_path.ToString());
                 }
             }
+        }
+
+        private void ExtendNextDotCircle(int dotIdx)
+        {
+            if (this._NextDot == null)
+            {
+                this._NextDot = new Ellipse();
+                this._NextDot.Width = 50;
+                this._NextDot.Height = 50;
+                this._NextDot.Fill = Brushes.Tomato;
+            }
+            else if (PuzzleBoardElement.Children.Contains(this._NextDot) == true)
+            {
+                PuzzleBoardElement.Children.Remove(this._NextDot);
+            }
+
+            Point p = this._CurrentCharacter.DotList[dotIdx];
+            Canvas.SetTop(this._NextDot, p.Y - (this._NextDot.Width / 2));
+            Canvas.SetLeft(this._NextDot, p.X - (this._NextDot.Height / 2));
+            PuzzleBoardElement.Children.Add(this._NextDot);
         }
         #endregion PuzzleMethods
 
@@ -520,6 +573,20 @@ namespace KinectEducationForKids
                 //아직 테스트할 글자가 남은 경우
                 RemoveCurrentPuzzle();
                 SettingNextPuzzle();
+            }
+        }
+
+        private void btn_prev_Click(object sender, RoutedEventArgs e)
+        {
+            if (this._CharacterIndex <= 0)
+            {
+                btn_back_Click(btn_back, new RoutedEventArgs());
+            }
+            else
+            {
+                //이전 테스트 꺼내오기
+                RemoveCurrentPuzzle();
+                SettingPrevPuzzle();
             }
         }
 

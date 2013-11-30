@@ -73,7 +73,7 @@ namespace KinectEducationForKids
                     if (this._KinectDevice.Status == KinectStatus.Connected)
                     {
                         //this.KinectDevice = value;
-                        this._KinectDevice.SkeletonStream.Enable();
+                        this._KinectDevice.SkeletonStream.Enable(new TransformSmoothParameters());
                         this._KinectDevice.Start();
                     }
                 }

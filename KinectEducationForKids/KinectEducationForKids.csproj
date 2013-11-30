@@ -58,6 +58,7 @@
     </ApplicationDefinition>
     <Compile Include="CharacterListLibrary.cs" />
     <Compile Include="QuizElementListLibrary.cs" />
+    <Compile Include="SoundManager.cs" />
     <Compile Include="Win_learn.xaml.cs">
       <DependentUpon>Win_learn.xaml</DependentUpon>
     </Compile>

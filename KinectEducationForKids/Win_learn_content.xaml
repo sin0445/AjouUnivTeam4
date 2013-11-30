@@ -5,7 +5,51 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              Name="view_learn_content" Width="1280" Height="660">
-    <StackPanel Name="panel1" Orientation="Horizontal" Width="1280" Height="660">
+    <Grid>
+        <StackPanel Name="panel1" Orientation="Horizontal" Width="1280" Height="660">
+            <StackPanel Name="panel2" Width="845" Height="660">
+                <Grid Name="grid" Width="845" Height="660">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Image Name="img_word" Grid.Row="0" Grid.Column="0" Stretch="Fill"/>
+                    <Canvas x:Name="PuzzleBoardElement" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" />
+                </Grid>
+            </StackPanel>
+            <Grid Name="grid2" Width="435" Height="660">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Button Name="btn_prev" Grid.Row="0" Width="375" Height="158" Margin="30">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_prev.jpg" />
+                    </Button.Background>
+                </Button>
+
+                <Button Name="btn_next" Grid.Row="1" Width="375" Height="158" Margin="30">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_next.png" />
+                    </Button.Background>
+                </Button>
+
+                <Button Name="btn_back" Grid.Row="2" Width="375" Height="158" Margin="30" Click="btn_back_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_back2.png" />
+                    </Button.Background>
+                </Button>
+            </Grid>
+        </StackPanel>
         <Canvas x:Name ="GameBoardElement">
             <Image x:Name="HandCursorElement" Source="/KinectEducationForKids;component/Images/HandCursor.png" Width="50" Height="50" RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
@@ -15,48 +59,5 @@
                 </Image.RenderTransform>
             </Image>
         </Canvas>
-        <StackPanel Name="panel2" Width="845" Height="660">
-            <Grid Name="grid" Width="845" Height="660">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Image Name="img_word" Grid.Row="0" Grid.Column="0" Stretch="Fill"/>
-                <Canvas x:Name="PuzzleBoardElement" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" />
-            </Grid>
-        </StackPanel>
-        <Grid Name="grid2" Width="435" Height="660">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Button Name="btn_prev" Grid.Row="0" Width="375" Height="158" Margin="30">
-                <Button.Background>
-                    <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_prev.jpg" />
-                </Button.Background>
-            </Button>
-
-            <Button Name="btn_next" Grid.Row="1" Width="375" Height="158" Margin="30">
-                <Button.Background>
-                    <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_next.png" />
-                </Button.Background>
-            </Button>
-
-            <Button Name="btn_back" Grid.Row="2" Width="375" Height="158" Margin="30" Click="btn_back_Click">
-                <Button.Background>
-                    <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_back2.png" />
-                </Button.Background>
-            </Button>
-
-        </Grid>
-    </StackPanel>
+    </Grid>
 </UserControl>
