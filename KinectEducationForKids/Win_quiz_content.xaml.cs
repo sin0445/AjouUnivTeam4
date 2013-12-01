@@ -454,25 +454,6 @@ namespace KinectEducationForKids
 
         #region QuizMethods
 
-        // 크기 조정 함수
-        private void edit_layout()
-        {
-            this.panel2.Width = this._mainWindow.window.Width;
-            this.panel2.Height = this._mainWindow.window.Height * 0.66;
-
-            this.img_quiz.Width = this.panel2.Width * 0.66 - 60;
-            this.img_quiz.Height = this.panel2.Height - 60;
-
-            this.btn_back.Width = this.panel2.Width - this.img_quiz.Width - 120;
-            this.btn_back.Height = this.panel2.Height * 0.5 - 60;
-
-            this.btn_next.Width = this.panel2.Width - this.img_quiz.Width - 120;
-            this.btn_next.Height = this.panel2.Height * 0.5 - 60;
-
-            this.grid.Width = this._mainWindow.window.Width;
-            this.grid.Height = this._mainWindow.window.Height - this.panel2.Height;
-        }
-
         // 다음 문제 출제 함수
         private void next_quiz()
         {
@@ -489,9 +470,6 @@ namespace KinectEducationForKids
 
                 // 화면 출력 함수
                 MakingQuiz();
-
-                // 크기 조정 함수
-                edit_layout();
             }
         }
 
@@ -503,11 +481,10 @@ namespace KinectEducationForKids
             // 정답 element Image 출력
             img_quiz.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _quizElements.QuizList[0].ToString());
             
-            // 보기 element button 출력
-            quiz1.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _quizElements.QuizList[1].ToString());
-            quiz2.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _quizElements.QuizList[2].ToString());
-            quiz3.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _quizElements.QuizList[3].ToString());
-            quiz4.ImageSource = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _quizElements.QuizList[4].ToString());
+            quiz1.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _quizElements.QuizList[1].ToString());
+            quiz2.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _quizElements.QuizList[2].ToString());
+            quiz3.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _quizElements.QuizList[3].ToString());
+            quiz4.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _quizElements.QuizList[4].ToString());
         }
 
         private void btn_1_Click(object sender, RoutedEventArgs e)
