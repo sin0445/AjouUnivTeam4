@@ -15,12 +15,12 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Button Name="btn_animal" Grid.Column="0" Grid.Row="0" Width="680" Height="155" Margin="30" Background="White">
+                <Button Name="btn_animal" Grid.Column="0" Grid.Row="0" Width="680" Height="155" Margin="30" Click="btn_animal_Click" Background="White">
                     <Button.Content>
                         <Image Source="/KinectEducationForKids;component/Images/btn_animal.png" Stretch="Fill"/>
                     </Button.Content>
                 </Button>
-                <Button Name="btn_fruit" Grid.Column="0" Grid.Row="1" Width="680" Height="155" Margin="30" Background="White">
+                <Button Name="btn_fruit" Grid.Column="0" Grid.Row="1" Width="680" Height="155" Margin="30" Click="btn_fruit_Click" Background="White">
                     <Button.Content>
                         <Image Source="/KinectEducationForKids;component/Images/btn_fruit.png" Stretch="Fill"/>
                     </Button.Content>

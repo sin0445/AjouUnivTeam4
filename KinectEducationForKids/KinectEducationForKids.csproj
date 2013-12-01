@@ -168,6 +168,8 @@
     <Resource Include="Images\correct.png" />
     <Resource Include="Images\wrong.png" />
     <Resource Include="Images\HandCursor2.png" />
+    <Resource Include="Images\img_next.png" />
+    <Resource Include="Images\img_prev.png" />
     <Content Include="Media\hand_over.wav" />
   </ItemGroup>
   <ItemGroup>

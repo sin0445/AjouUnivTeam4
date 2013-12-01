@@ -648,6 +648,26 @@ namespace KinectEducationForKids
             }
             else
             {
+                ImageSourceConverter imgConv = new ImageSourceConverter();
+
+                image_notify.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/img_next.png");
+                panel1.Visibility = Visibility.Hidden;
+
+                panel_image.Visibility = Visibility.Visible;
+                
+                var dispatcherTimer = new DispatcherTimer();
+                dispatcherTimer.Interval = TimeSpan.FromSeconds(2);
+                dispatcherTimer.Tick += delegate
+                {
+                    image_notify.Source = null;
+                    panel_image.Visibility = Visibility.Hidden;
+                    panel1.Visibility = Visibility.Visible;
+
+                    dispatcherTimer.Stop();
+                };
+
+                dispatcherTimer.Start();
+
                 //아직 테스트할 글자가 남은 경우
                 RemoveCurrentPuzzle();
                 SettingNextPuzzle();
@@ -662,6 +682,26 @@ namespace KinectEducationForKids
             }
             else
             {
+                ImageSourceConverter imgConv = new ImageSourceConverter();
+
+                image_notify.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/img_prev.png");
+                panel1.Visibility = Visibility.Hidden;
+
+                panel_image.Visibility = Visibility.Visible;
+
+                var dispatcherTimer = new DispatcherTimer();
+                dispatcherTimer.Interval = TimeSpan.FromSeconds(2);
+                dispatcherTimer.Tick += delegate
+                {
+                    image_notify.Source = null;
+                    panel_image.Visibility = Visibility.Hidden;
+                    panel1.Visibility = Visibility.Visible;
+
+                    dispatcherTimer.Stop();
+                };
+
+                dispatcherTimer.Start();
+
                 //이전 테스트 꺼내오기
                 RemoveCurrentPuzzle();
                 SettingPrevPuzzle();
