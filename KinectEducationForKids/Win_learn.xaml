@@ -15,20 +15,20 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Button Name="btn_con" Grid.Column="0" Grid.Row="0" Margin="30" Width="680" Height="155" Click="btn_con_Click">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_vowel.png" Stretch="Fill"/>
-                    </Button.Background>
+                <Button Name="btn_con" Grid.Column="0" Grid.Row="0" Margin="30" Width="680" Height="155" Click="btn_con_Click" Background="White">
+                    <Button.Content>
+                        <Image Source="/KinectEducationForKids;component/Images/btn_vowel.png" Stretch="Fill"/>
+                    </Button.Content>
                 </Button>
-                <Button Name="btn_vow" Grid.Column="0" Grid.Row="1" Margin="30" Width="680" Height="155" Click="btn_vow_Click">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_cons.png" Stretch="Fill"/>
-                    </Button.Background>
+                <Button Name="btn_vow" Grid.Column="0" Grid.Row="1" Margin="30" Width="680" Height="155" Click="btn_vow_Click" Background="White">
+                    <Button.Content>
+                        <Image Source="/KinectEducationForKids;component/Images/btn_cons.png" Stretch="Fill"/>
+                    </Button.Content>
                 </Button>
-                <Button Name="btn_back" Grid.Column="0" Grid.Row="2" Margin="30" Width="680" Height="155" Click="btn_back_Click">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_back.png" Stretch="Fill"/>
-                    </Button.Background>
+                <Button Name="btn_back" Grid.Column="0" Grid.Row="2" Margin="30" Width="680" Height="155" Click="btn_back_Click" Background="White">
+                    <Button.Content>
+                        <Image Source="/KinectEducationForKids;component/Images/btn_back.png" Stretch="Fill"/>
+                    </Button.Content>
                 </Button>
             </Grid>
         </StackPanel>

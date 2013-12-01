@@ -40,14 +40,29 @@ namespace KinectEducationForKids
         {
             switch (a)
             {
-                case AudioList.Lists.뒤로가기:
-                    LoadAudio("뒤로가기");
+                case AudioList.Lists.종료하기:
+                    LoadAudio("종료하기");
                     break;
                 case AudioList.Lists.한글쓰기:
                     LoadAudio("한글쓰기");
                     break;
                 case AudioList.Lists.한글퀴즈:
                     LoadAudio("한글퀴즈");
+                    break;
+                case AudioList.Lists.자음쓰기:
+                    LoadAudio("자음쓰기");
+                    break;
+                case AudioList.Lists.모음쓰기:
+                    LoadAudio("모음쓰기");
+                    break;
+                case AudioList.Lists.뒤로가기:
+                    LoadAudio("뒤로가기");
+                    break;
+                case AudioList.Lists.과일퀴즈:
+                    LoadAudio("과일퀴즈");
+                    break;
+                case AudioList.Lists.동물퀴즈:
+                    LoadAudio("동물퀴즈");
                     break;
                 default:
                     break;
@@ -79,9 +94,6 @@ namespace KinectEducationForKids
             this._TtsPlayer.Stream = stream;
             this._TtsPlayer.Play();
             this._Tts.SetOutputToNull();
-
-            //this._Tts.SpeakAsyncCancelAll();
-            //this._Tts.SpeakAsync(ttsSentence);
         }
 
         private void PauseAudio(SoundPlayer player)
@@ -141,8 +153,13 @@ namespace KinectEducationForKids
              * 배경음 71~80
              */
             한글쓰기 = 1,
-            한글퀴즈 = 2,
-            뒤로가기 = 3,
+            한글퀴즈,
+            종료하기,
+            자음쓰기,
+            모음쓰기,
+            뒤로가기,
+            과일퀴즈,
+            동물퀴즈
         };
     }
     #endregion AudioList

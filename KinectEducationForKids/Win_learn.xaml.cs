@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Windows.Media.Animation;
 using Microsoft.Kinect;
 
 namespace KinectEducationForKids
@@ -34,18 +35,22 @@ namespace KinectEducationForKids
         private int _ticks;
         private DispatcherTimer _timer;
         private const int _hoverTime = 20;
+        private SoundManager _soundManager;
+        private List<Button> _animatedBtnList;
 
         private Win_learn_content win_learn_content;
         #endregion MemberVariables
 
         #region Constructor
-        public Win_learn(MainWindow win, KinectController control)
+        public Win_learn(MainWindow win, KinectController control, SoundManager sound)
         {
             InitializeComponent();
 
             this._mainWindow = win;
             this._layoutRoot = this._mainWindow.LayoutRoot;
             this._KinectController = control;
+            this._soundManager = sound;
+            this._animatedBtnList = new List<Button>();
 
             this.Loaded += (s, e) => { InitLearnWindow(); };
             this.Unloaded += (s, e) => { UninitLearnWindow(); };
@@ -240,10 +245,11 @@ namespace KinectEducationForKids
                 }
                 else                    //새롭게 StartBtn에 손을 올린 경우
                 {
-                    if (this._timer != null)
-                        RemoveTimer();
+                    HandMovedNewButton(this._lastElement, btn_con);
+                    //if (this._timer != null)
+                    //    RemoveTimer();
 
-                    CreateTimer();
+                    //CreateTimer();
                 }
                 _lastElement = element;
             }
@@ -265,10 +271,7 @@ namespace KinectEducationForKids
                 }
                 else                    //새롭게 StartBtn에 손을 올린 경우
                 {
-                    if (this._timer != null)
-                        RemoveTimer();
-
-                    CreateTimer();
+                    HandMovedNewButton(this._lastElement, btn_vow);
                 }
                 _lastElement = element;
             }
@@ -289,11 +292,7 @@ namespace KinectEducationForKids
                 }
                 else                         //새롭게 ExitBtn에 손을 댄 경우
                 {
-                    if (this._timer != null)            //만일 타이머가 기존에 존재하는 경우 이를 제거한후
-                    {
-                        RemoveTimer();
-                    }
-                    CreateTimer();                      //다시 타이머를 생성한다
+                    HandMovedNewButton(this._lastElement, btn_back);
                 }
                 _lastElement = element;                 //그리고 이전 element에 ExitBtn을 등록
             }
@@ -305,6 +304,11 @@ namespace KinectEducationForKids
                 if (this._timer != null)                //타이머가 있는 경우에도 이를 제거
                 {
                     RemoveTimer();
+                }
+
+                foreach (Button btn in this._animatedBtnList)
+                {
+                    btn.Background = new SolidColorBrush(Colors.White);
                 }
             }
         }
@@ -333,7 +337,90 @@ namespace KinectEducationForKids
             this._ticks++;
         }
         #endregion TimerMethods
+        #region AnimationMethods
 
+        private void ApplyProgressAnimationOnButton(Button btn)
+        {
+            LinearGradientBrush brush = new LinearGradientBrush();
+            brush.EndPoint = new Point(0, 1);
+            brush.StartPoint = new Point(0, 0);
+            brush.Opacity = 0.8;
+            brush.GradientStops.Add(new GradientStop(Colors.White, 1));
+            brush.GradientStops.Add(new GradientStop(Colors.LightPink, 1));
+            btn.Background = brush;
+
+            this.RegisterName("GradientStop1", brush.GradientStops[0]);
+            this.RegisterName("GradientStop2", brush.GradientStops[1]);
+
+            DoubleAnimation animation = new DoubleAnimation();
+            animation.From = 1.0;
+            animation.To = 0.0;
+            animation.Duration = TimeSpan.FromSeconds(2.5);
+
+            Storyboard.SetTargetName(animation, "GradientStop1");
+            Storyboard.SetTargetProperty(animation, new PropertyPath(GradientStop.OffsetProperty));
+
+            DoubleAnimation animation2 = new DoubleAnimation();
+            animation2.From = 1.0;
+            animation2.To = 0.0;
+            animation2.Duration = TimeSpan.FromSeconds(2.5);
+
+            Storyboard.SetTargetName(animation2, "GradientStop2");
+            Storyboard.SetTargetProperty(animation2, new PropertyPath(GradientStop.OffsetProperty));
+
+            Storyboard sb = new Storyboard();
+            sb.Children.Add(animation);
+            sb.Children.Add(animation2);
+
+            sb.Begin(this);
+
+            this.UnregisterName("GradientStop1");
+            this.UnregisterName("GradientStop2");
+        }
+
+        #endregion AnimationMethods
+
+        #region ButtonMethods
+        private void HandMovedNewButton(UIElement lastElement, Button currentBtn)
+        {
+            if (this._timer != null)
+                RemoveTimer();
+            CreateTimer();
+
+            foreach (Button btn in this._animatedBtnList)
+            {
+                btn.Background = new SolidColorBrush(Colors.White);
+            }
+
+            HandEnterButtonHandler(currentBtn, new RoutedEventArgs());
+            this._animatedBtnList.Add(currentBtn);
+
+            if (currentBtn.Equals(btn_con))
+            {
+                this._soundManager.PlayAudio(AudioList.Lists.자음쓰기);
+            }
+            else if (currentBtn.Equals(btn_vow))
+            {
+                this._soundManager.PlayAudio(AudioList.Lists.모음쓰기);
+            }
+            else if (currentBtn.Equals(btn_back))
+            {
+                this._soundManager.PlayAudio(AudioList.Lists.뒤로가기);
+            }
+        }
+
+        private void HandEnterButtonHandler(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+            ApplyProgressAnimationOnButton(btn);
+        }
+
+        private void HandLeaveButtonHandler(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+            btn.Background = new SolidColorBrush(Colors.White);
+        }
+        
         private void btn_con_Click(object sender, RoutedEventArgs e)
         {
             this.win_learn_content = new Win_learn_content(this._mainWindow, this._KinectController, CharacterListLibrary.CHARACTERTYPE.CONSONANT);
@@ -361,5 +448,6 @@ namespace KinectEducationForKids
         {
             this.LearnCloseHandler(this, new EventArgs());
         }
+        #endregion ButtonMethods
     }
 }
