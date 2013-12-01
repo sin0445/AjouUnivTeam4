@@ -51,7 +51,7 @@
             </Grid>
         </StackPanel>
         <Canvas x:Name ="GameBoardElement">
-            <Image x:Name="HandCursorElement" Source="/KinectEducationForKids;component/Images/HandCursor.png" Width="50" Height="50" RenderTransformOrigin="0.5,0.5">
+            <Image x:Name="HandCursorElement" Source="/KinectEducationForKids;component/Images/HandCursor2.png" Width="50" Height="50" RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform x:Name="HandcursorScale" ScaleX="1"/>
