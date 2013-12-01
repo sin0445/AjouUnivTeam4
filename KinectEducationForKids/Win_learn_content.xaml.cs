@@ -650,7 +650,7 @@ namespace KinectEducationForKids
             {
                 ImageSourceConverter imgConv = new ImageSourceConverter();
 
-                image_notify.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/img_next.png");
+                image_notify.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/img_next.jpg");
                 panel1.Visibility = Visibility.Hidden;
 
                 panel_image.Visibility = Visibility.Visible;
@@ -684,7 +684,7 @@ namespace KinectEducationForKids
             {
                 ImageSourceConverter imgConv = new ImageSourceConverter();
 
-                image_notify.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/img_prev.png");
+                image_notify.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/img_prev.jpg");
                 panel1.Visibility = Visibility.Hidden;
 
                 panel_image.Visibility = Visibility.Visible;
@@ -710,7 +710,27 @@ namespace KinectEducationForKids
 
         private void btn_back_Click(object sender, RoutedEventArgs e)
         {
-            this.LearnContentCloseHandler(this, new EventArgs());
+            ImageSourceConverter imgConv = new ImageSourceConverter();
+
+            image_notify.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/img_back.jpg");
+            panel1.Visibility = Visibility.Hidden;
+
+            panel_image.Visibility = Visibility.Visible;
+
+            var dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
+            dispatcherTimer.Tick += delegate
+            {
+                image_notify.Source = null;
+                panel_image.Visibility = Visibility.Hidden;
+                panel1.Visibility = Visibility.Visible;
+
+                this.LearnContentCloseHandler(this, new EventArgs());
+
+                dispatcherTimer.Stop();
+            };
+
+            dispatcherTimer.Start();
         }
         #endregion ButtonMethods
     }

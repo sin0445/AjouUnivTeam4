@@ -39,13 +39,17 @@ namespace KinectEducationForKids
         private List<Button> _animatedBtnList;
 
         private QuizElements _quizElements;
-        
+
+        // 첫번째 문제인지 확인하는 flag
+        private bool flag;
+
         #endregion MemberVariables
 
         #region Constructor
         public Win_quiz_content(MainWindow win, KinectController control, QuizElementListLibrary.QUIZTYPE type, SoundManager sound)
         {
             InitializeComponent();
+            flag = true;
 
             this._mainWindow = win;
             this._layoutRoot = this._mainWindow.LayoutRoot;
@@ -468,12 +472,59 @@ namespace KinectEducationForKids
             // 모든 문제 출제시 프로그램 종료
             if (_quizElements.isGameEnd())
             {
-                this.QuizContentCloseHandler(this, new EventArgs());
+                ImageSourceConverter imgConv = new ImageSourceConverter();
+
+                image_notify.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/img_back.jpg");
+                panel1.Visibility = Visibility.Hidden;
+
+                panel_image.Visibility = Visibility.Visible;
+
+                var dispatcherTimer = new DispatcherTimer();
+                dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
+                dispatcherTimer.Tick += delegate
+                {
+                    image_notify.Source = null;
+                    panel_image.Visibility = Visibility.Hidden;
+                    panel1.Visibility = Visibility.Visible;
+
+                    this.QuizContentCloseHandler(this, new EventArgs());
+
+                    dispatcherTimer.Stop();
+                };
+
+                dispatcherTimer.Start();
             }
 
             else
             {
-                // 문제 출제 함수
+                if (flag)
+                {
+                    flag = !flag;
+                }
+                else
+                {
+                    ImageSourceConverter imgConv = new ImageSourceConverter();
+
+                    image_notify.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/img_next.jpg");
+                    panel1.Visibility = Visibility.Hidden;
+
+                    panel_image.Visibility = Visibility.Visible;
+
+                    var dispatcherTimer = new DispatcherTimer();
+                    dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
+                    dispatcherTimer.Tick += delegate
+                    {
+                        image_notify.Source = null;
+                        panel_image.Visibility = Visibility.Hidden;
+                        panel1.Visibility = Visibility.Visible;
+
+                        dispatcherTimer.Stop();
+                    };
+
+                    dispatcherTimer.Start();
+                }
+
+                // 문제 출력 함수
                 _quizElements.SetQuiz();
 
                 // 화면 출력 함수
@@ -641,7 +692,27 @@ namespace KinectEducationForKids
 
         private void btn_back_Click(object sender, RoutedEventArgs e)
         {
-            this.QuizContentCloseHandler(this, new EventArgs());
+            ImageSourceConverter imgConv = new ImageSourceConverter();
+
+            image_notify.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/img_back.jpg");
+            panel1.Visibility = Visibility.Hidden;
+
+            panel_image.Visibility = Visibility.Visible;
+
+            var dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
+            dispatcherTimer.Tick += delegate
+            {
+                image_notify.Source = null;
+                panel_image.Visibility = Visibility.Hidden;
+                panel1.Visibility = Visibility.Visible;
+
+                this.QuizContentCloseHandler(this, new EventArgs());
+
+                dispatcherTimer.Stop();
+            };
+
+            dispatcherTimer.Start();
         }
 
         private void btn_next_Click(object sender, RoutedEventArgs e)

@@ -78,5 +78,8 @@
                 </Image.RenderTransform>
             </Image>
         </Canvas>
+        <StackPanel Name="panel_image" Orientation="Horizontal" Width="1280" Height="660" Visibility="Hidden">
+            <Image Name="image_notify" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" Width="1280" Height="660"></Image>
+        </StackPanel>
     </Grid>
 </UserControl>
