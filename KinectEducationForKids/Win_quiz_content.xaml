@@ -4,59 +4,73 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             Name="view_quiz_ani">
-    <Grid>
-        <StackPanel Name="panel1" Orientation="Vertical" Width="Auto" Height="Auto">
-            <StackPanel Name="panel2" Orientation="Horizontal" Width="Auto" Height="Auto">
-                <Image x:Name="img_quiz" Stretch="Fill" Margin="30">
-                </Image>
-                <StackPanel Name="panel3" Orientation="Vertical" Width="Auto" Height="Auto">
-                    <Button Name="btn_back" Click="btn_back_Click" Width="Auto" Height="Auto" Margin="30">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_back2.png" />
-                        </Button.Background>
-                    </Button>
-                    <Button Name="btn_next" Width="Auto" Height="Auto" Margin="30" Click="btn_next_Click">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_next.png" />
-                        </Button.Background>
-                    </Button>
-                </StackPanel>
+             Name="view_quiz_content" Width="1280" Height="660">
+    <UserControl.Resources>
+        <Style x:Key="MyButtonStyle" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" 
+                            BorderThickness="1" 
+                            Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="Black" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid Name="grid">
+        <StackPanel Name="panel1" Orientation="Vertical">
+        <StackPanel Name="panel2" Orientation="Horizontal" Width="1280" Height="435">
+            <Image x:Name="img_quiz" Width="785" Height="375" Stretch="Fill" Margin="30">
+            </Image>
+            <StackPanel Name="panel3" Orientation="Vertical" >
+                <Button Name="btn_back" Click="btn_back_Click" Width="375" Height="158" Margin="30">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_back2.png" />
+                    </Button.Background>
+                </Button>
+                <Button Name="btn_next" Width="375" Height="158" Margin="30" Click="btn_next_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_next.png" />
+                    </Button.Background>
+                </Button>
             </StackPanel>
-            <Grid Name="grid" Width="Auto" Height="Auto">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Button Name="btn_1" Grid.Column="0" Grid.Row="0" Margin="30" Click="btn_1_Click">
-                    <Button.Background>
-                        <ImageBrush x:Name="quiz1"/>
-                    </Button.Background>
-                </Button>
-                <Button Name="btn_2" Grid.Column="1" Grid.Row="0" Margin="30" Click="btn_2_Click">
-                    <Button.Background>
-                        <ImageBrush x:Name="quiz2"/>
-                    </Button.Background>
-                </Button>
-                <Button Name="btn_3" Grid.Column="2" Grid.Row="0" Margin="30" Click="btn_3_Click">
-                    <Button.Background>
-                        <ImageBrush x:Name="quiz3"/>
-                    </Button.Background>
-                </Button>
-                <Button Name="btn_4" Grid.Column="3" Grid.Row="0" Margin="30" Click="btn_4_Click" Uid="">
-                    <Button.Background>
-                        <ImageBrush x:Name="quiz4"/>
-                    </Button.Background>
-                </Button>
-            </Grid>
         </StackPanel>
-        <Canvas x:Name="GameBoardElement">
-            <Image x:Name="HandCursorElement" Source="Images/HandCursor.png" Width="50" Height="50" RenderTransformOrigin="0.5,0.5">
+        <Grid Name="grid2" Width="1280" Height="225">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Button Style="{StaticResource MyButtonStyle}" Name="btn_1" Grid.Column="0" Grid.Row="0" Margin="30" Click="btn_1_Click" Background="Orange">
+                <Image x:Name="quiz1" />
+            </Button>
+            <Button Style="{StaticResource MyButtonStyle}" Name="btn_2" Grid.Column="1" Grid.Row="0" Margin="30" Click="btn_2_Click" Background="Green">
+                <Image x:Name="quiz2"/>
+            </Button>
+            <Button Style="{StaticResource MyButtonStyle}" Name="btn_3" Grid.Column="2" Grid.Row="0" Margin="30" Click="btn_3_Click" Background="Blue">
+                <Image x:Name="quiz3"/>
+            </Button>
+            <Button Style="{StaticResource MyButtonStyle}" Name="btn_4" Grid.Column="3" Grid.Row="0" Margin="30" Click="btn_4_Click" Background="Red">
+                <Image x:Name="quiz4"/>
+            </Button>
+        </Grid>
+    </StackPanel>
+        <Canvas x:Name ="GameBoardElement">
+            <Image x:Name="HandCursorElement" Source="/KinectEducationForKids;component/Images/HandCursor.png" Width="50" Height="50" RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform x:Name="HandcursorScale" ScaleX="1"/>

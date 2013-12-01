@@ -46,10 +46,6 @@ namespace KinectEducationForKids
             _KinectController = new KinectController();
             this.Loaded += (s, e) => { SettingKinectDevice(); };
             this.Unloaded += (s, e) => { UninitializeKinectDevice(); };
-
-            this.img_main.Width = this.window.Width / 3;
-            this.grid.Width = this.window.Width - this.img_main.Width;
-            this.grid.HorizontalAlignment = HorizontalAlignment.Right;
         }
         #region CoreMethods
         private void SettingKinectDevice()

@@ -56,10 +56,6 @@ namespace KinectEducationForKids
             this._KinectDevice = this._KinectController._KinectDevice;
             this._KinectDevice.SkeletonFrameReady += LearnWindow_SkeletonFrameReady;
             this._Skeletons = new Skeleton[this._KinectDevice.SkeletonStream.FrameSkeletonArrayLength];
-
-            this.img_main.Width = _mainWindow.window.Width / 3;
-            this.grid.Width = _mainWindow.window.Width - this.img_main.Width;
-            this.grid.HorizontalAlignment = HorizontalAlignment.Right;
         }
         private void UninitLearnWindow()
         {

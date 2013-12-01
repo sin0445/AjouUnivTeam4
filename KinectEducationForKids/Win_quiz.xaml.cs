@@ -56,10 +56,6 @@ namespace KinectEducationForKids
             this._KinectDevice = this._KinectController._KinectDevice;
             this._KinectDevice.SkeletonFrameReady += QuizWindow_SkeletonFrameReady;
             this._Skeletons = new Skeleton[this._KinectDevice.SkeletonStream.FrameSkeletonArrayLength];
-
-            this.img_main.Width = this._mainWindow.window.Width / 3;
-            this.grid.Width = this._mainWindow.window.Width - this.img_main.Width;
-            this.grid.HorizontalAlignment = HorizontalAlignment.Right;
         }
 
         private void UninitQuizWindow()
