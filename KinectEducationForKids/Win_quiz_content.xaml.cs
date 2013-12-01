@@ -555,6 +555,7 @@ namespace KinectEducationForKids
                 dispatcherTimer.Start();
             }
         }
+
         #endregion QuizMethods
 
         private void btn_back_Click(object sender, RoutedEventArgs e)

@@ -165,6 +165,8 @@
     <Resource Include="Images\vow_8.png" />
     <Resource Include="Images\vow_9.png" />
     <Resource Include="Images\vow_10.png" />
+    <Resource Include="Images\correct.png" />
+    <Resource Include="Images\wrong.png" />
     <Content Include="Media\hand_over.wav" />
   </ItemGroup>
   <ItemGroup>
