@@ -230,6 +230,10 @@ namespace KinectEducationForKids
                         RemoveTimer();
 
                     CreateTimer();
+                    //ApplyProgressAnimationOnButton(btn_learn);
+                    //if(this._lastElement != null)
+                    //  HandLeaveButtonHandler(this._lastElement, new RoutedEventArgs());
+                    HandsEnterButtonHandler(btn_learn, new RoutedEventArgs());
                     this._soundManager.PlayAudio(AudioList.Lists.한글쓰기);
                 }
                 _lastElement = element;
@@ -256,6 +260,9 @@ namespace KinectEducationForKids
                         RemoveTimer();
 
                     CreateTimer();
+                    //if (this._lastElement != null)
+                    //    HandLeaveButtonHandler(this._lastElement, new RoutedEventArgs());
+                    ApplyProgressAnimationOnButton(btn_quiz);
                     this._soundManager.PlayAudio(AudioList.Lists.한글퀴즈);
                     //SetSoundPlayer(this._effectPlayer, Properties.Resources.hand_over);
                 }
@@ -283,6 +290,9 @@ namespace KinectEducationForKids
                         RemoveTimer();
                     }
                     CreateTimer();                      //다시 타이머를 생성한다
+                    //if(this._lastElement!= null)
+                    //    HandLeaveButtonHandler(this._lastElement, new RoutedEventArgs());
+                    ApplyProgressAnimationOnButton(btn_exit);
                     this._soundManager.PlayAudio(AudioList.Lists.뒤로가기);
                 }
                 _lastElement = element;                 //그리고 이전 element에 ExitBtn을 등록
@@ -325,6 +335,7 @@ namespace KinectEducationForKids
         #endregion TimerMethods
 
         #region AnimationMethods
+
         private void ApplyProgressAnimationOnButton(Button btn)
         {
             LinearGradientBrush brush = new LinearGradientBrush();
@@ -366,6 +377,18 @@ namespace KinectEducationForKids
         #endregion AnimationMethods
 
         #region ButtonMethods
+        private void HandsEnterButtonHandler(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+            ApplyProgressAnimationOnButton(btn);
+        }
+
+        private void HandLeaveButtonHandler(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+            btn.Background = new SolidColorBrush(Colors.White);
+        }
+
         private void btn_learn_Click(object sender, RoutedEventArgs e)
         {
             this.win_learn = new Win_learn(this, this._KinectController);

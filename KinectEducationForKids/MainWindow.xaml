@@ -16,20 +16,20 @@
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Button Name="btn_learn" Grid.Column="0" Grid.Row="0" Width="680" Height="155" Margin="30" Click="btn_learn_Click">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_writing.png" Stretch="Fill"/>
-                        </Button.Background>
+                    <Button Name="btn_learn" Grid.Column="0" Grid.Row="0" Width="680" Height="155" Margin="30" Click="btn_learn_Click" Background="White">
+                        <Button.Content>
+                            <Image Source="/KinectEducationForKids;component/Images/btn_writing.png" Stretch="Fill"/>
+                        </Button.Content>
                     </Button>
-                    <Button Name="btn_quiz" Grid.Column="0" Grid.Row="1" Width="680" Height="155" Margin="30" Click="btn_quiz_Click">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_quiz.png" Stretch="Fill"/>
-                        </Button.Background>
+                    <Button Name="btn_quiz" Grid.Column="0" Grid.Row="1" Width="680" Height="155" Margin="30" Click="btn_quiz_Click" Background="White">
+                        <Button.Content>
+                            <Image Source="/KinectEducationForKids;component/Images/btn_quiz.png" Stretch="Fill"/>
+                        </Button.Content>
                     </Button>
-                    <Button Name="btn_exit" Grid.Column="0" Grid.Row="2" Width="680" Height="155" Margin="30" Click="btn_exit_Click">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_exit.png" Stretch="Fill"/>
-                        </Button.Background>
+                    <Button Name="btn_exit" Grid.Column="0" Grid.Row="2" Width="680" Height="155" Margin="30" Click="btn_exit_Click" Background="White">
+                        <Button.Content>
+                            <Image Source="/KinectEducationForKids;component/Images/btn_exit.png" Stretch="Fill"/>
+                        </Button.Content>
                     </Button>
                 </Grid>
             </StackPanel>
