@@ -656,7 +656,7 @@ namespace KinectEducationForKids
                 panel_image.Visibility = Visibility.Visible;
                 
                 var dispatcherTimer = new DispatcherTimer();
-                dispatcherTimer.Interval = TimeSpan.FromSeconds(2);
+                dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
                 dispatcherTimer.Tick += delegate
                 {
                     image_notify.Source = null;
@@ -690,7 +690,7 @@ namespace KinectEducationForKids
                 panel_image.Visibility = Visibility.Visible;
 
                 var dispatcherTimer = new DispatcherTimer();
-                dispatcherTimer.Interval = TimeSpan.FromSeconds(2);
+                dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
                 dispatcherTimer.Tick += delegate
                 {
                     image_notify.Source = null;
