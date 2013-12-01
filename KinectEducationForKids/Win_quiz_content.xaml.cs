@@ -489,30 +489,70 @@ namespace KinectEducationForKids
 
         private void btn_1_Click(object sender, RoutedEventArgs e)
         {
-            checking_answer(0);
+            checking_answer(0, quiz1, btn_1);
         }
 
         private void btn_2_Click(object sender, RoutedEventArgs e)
         {
-            checking_answer(1);
+            checking_answer(1, quiz2, btn_2);
         }
 
         private void btn_3_Click(object sender, RoutedEventArgs e)
         {
-            checking_answer(2);
+            checking_answer(2, quiz3, btn_3);
         }
 
         private void btn_4_Click(object sender, RoutedEventArgs e)
         {
-            checking_answer(3);
+            checking_answer(3, quiz4, btn_4);
         }
 
-        private void checking_answer(int user_answer)
+        private void checking_answer(int user_answer, Image button, Button btn)
         {
             // 사용자 선택 답과 정답 비교
             if (user_answer.ToString().Equals(_quizElements.QuizList[5]))
             {
-                next_quiz();
+                ImageSourceConverter imgConv = new ImageSourceConverter();
+
+                string temp_source = button.Source.ToString();
+                button.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/correct.png");
+
+                Brush background = btn.Background;
+                btn.Background = Brushes.White;
+
+                var dispatcherTimer = new DispatcherTimer();
+                dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
+                dispatcherTimer.Tick += delegate
+                {
+                    button.Source = (ImageSource)imgConv.ConvertFromString(temp_source);
+                    btn.Background = background;
+                    next_quiz();
+                    dispatcherTimer.Stop();
+                };
+
+                dispatcherTimer.Start();
+            }
+
+            else
+            {
+                ImageSourceConverter imgConv = new ImageSourceConverter();
+
+                string temp_source = button.Source.ToString();
+                button.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/wrong.png");
+
+                Brush background = btn.Background;
+                btn.Background = Brushes.White;
+
+                var dispatcherTimer = new DispatcherTimer();
+                dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
+                dispatcherTimer.Tick += delegate
+                {
+                    button.Source = (ImageSource)imgConv.ConvertFromString(temp_source);
+                    btn.Background = background;
+                    dispatcherTimer.Stop();
+                };
+
+                dispatcherTimer.Start();
             }
         }
         #endregion QuizMethods
