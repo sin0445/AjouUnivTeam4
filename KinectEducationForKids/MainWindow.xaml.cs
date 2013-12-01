@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -234,7 +235,6 @@ namespace KinectEducationForKids
 
                     CreateTimer();
                     this._soundManager.PlayAudio(AudioList.Lists.한글쓰기);
-                    //SetSoundPlayer(this._effectPlayer, Properties.Resources.hand_over);
                 }
                 _lastElement = element;
             }
@@ -288,7 +288,6 @@ namespace KinectEducationForKids
                     }
                     CreateTimer();                      //다시 타이머를 생성한다
                     this._soundManager.PlayAudio(AudioList.Lists.뒤로가기);
-                    //SetSoundPlayer(this._effectPlayer, Properties.Resources.hand_over);
                 }
                 _lastElement = element;                 //그리고 이전 element에 ExitBtn을 등록
             }
@@ -327,22 +326,50 @@ namespace KinectEducationForKids
         {
             this._ticks++;
         }
-
-        private void SetSoundPlayer(SoundPlayer soundPlayer, Stream soundStream)
-        {
-            soundPlayer.Stream = soundStream;
-            soundPlayer.LoadAsync();
-            soundPlayer.Play();
-        }
-
-        private void RemoveSoundPlayer(SoundPlayer soundPlayer)
-        {
-            soundPlayer.Stop();
-            soundPlayer.Dispose();
-            soundPlayer = null;
-        }
         #endregion TimerMethods
 
+        #region AnimationMethods
+        private void ApplyProgressAnimationOnButton(Button btn)
+        {
+            LinearGradientBrush brush = new LinearGradientBrush();
+            brush.EndPoint = new Point(0, 1);
+            brush.StartPoint = new Point(0, 0);
+            brush.GradientStops.Add(new GradientStop(Colors.White, 1));
+            brush.GradientStops.Add(new GradientStop(Colors.Gray, 1));
+            btn.Background = brush;
+
+            this.RegisterName("GradientStop1", brush.GradientStops[0]);
+            this.RegisterName("GradientStop2", brush.GradientStops[1]);
+
+            DoubleAnimation animation = new DoubleAnimation();
+            animation.From = 1.0;
+            animation.To = 0.0;
+            animation.Duration = TimeSpan.FromSeconds(_hoverTime/12);
+
+            Storyboard.SetTargetName(animation, "GradientStop1");
+            Storyboard.SetTargetProperty(animation, new PropertyPath(GradientStop.OffsetProperty));
+
+            DoubleAnimation animation2 = new DoubleAnimation();
+            animation2.From = 1.0;
+            animation2.To = 0.0;
+            animation2.Duration = TimeSpan.FromSeconds(_hoverTime/10);
+
+            Storyboard.SetTargetName(animation2, "GradientStop2");
+            Storyboard.SetTargetProperty(animation2, new PropertyPath(GradientStop.OffsetProperty));
+
+            Storyboard sb = new Storyboard();
+            sb.Children.Add(animation);
+            sb.Children.Add(animation2);
+
+            sb.Begin(this);
+
+            this.UnregisterName("GradientStop1");
+            this.UnregisterName("GradientStop2");
+        }
+
+        #endregion AnimationMethods
+
+        #region ButtonMethods
         private void btn_learn_Click(object sender, RoutedEventArgs e)
         {
             this.win_learn = new Win_learn(this, this._KinectController);
@@ -378,5 +405,6 @@ namespace KinectEducationForKids
             LayoutRoot.Children.Clear();
             Close();
         }
+        #endregion ButtonMethods
     }
 }
