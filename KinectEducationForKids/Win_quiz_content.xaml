@@ -33,15 +33,15 @@
             <Image x:Name="img_quiz" Width="785" Height="375" Stretch="Fill" Margin="30">
             </Image>
             <StackPanel Name="panel3" Orientation="Vertical" >
-                <Button Name="btn_back" Click="btn_back_Click" Width="375" Height="158" Margin="30">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_back2.png" />
-                    </Button.Background>
+                <Button Name="btn_back" Click="btn_back_Click" Width="375" Height="158" Margin="30" Background="White">
+                    <Button.Content>
+                        <Image Source="/KinectEducationForKids;component/Images/btn_back2.png" />
+                    </Button.Content>
                 </Button>
-                <Button Name="btn_next" Width="375" Height="158" Margin="30" Click="btn_next_Click">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_next.png" />
-                    </Button.Background>
+                <Button Name="btn_next" Width="375" Height="158" Margin="30" Click="btn_next_Click" Background="White">
+                    <Button.Content>
+                        <Image Source="/KinectEducationForKids;component/Images/btn_next.png" />
+                    </Button.Content>
                 </Button>
             </StackPanel>
         </StackPanel>

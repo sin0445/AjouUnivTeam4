@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Windows.Media.Animation;
 using Microsoft.Kinect;
 
 namespace KinectEducationForKids
@@ -34,19 +35,23 @@ namespace KinectEducationForKids
         private int _ticks;
         private DispatcherTimer _buttonTimer;
         private const int _hoverTime = 20;
+        private SoundManager _soundManager;
+        private List<Button> _animatedBtnList;
 
         private QuizElements _quizElements;
         
         #endregion MemberVariables
 
         #region Constructor
-        public Win_quiz_content(MainWindow win, KinectController control, QuizElementListLibrary.QUIZTYPE type)
+        public Win_quiz_content(MainWindow win, KinectController control, QuizElementListLibrary.QUIZTYPE type, SoundManager sound)
         {
             InitializeComponent();
 
             this._mainWindow = win;
             this._layoutRoot = this._mainWindow.LayoutRoot;
             this._KinectController = control;
+            this._soundManager = sound;
+            this._animatedBtnList = new List<Button>();
 
             this.Loaded += (s, e) => { InitQuizContentWindow(); };
             this.Unloaded += (s, e) => { UninitQuizContentWindow(); };
@@ -260,10 +265,7 @@ namespace KinectEducationForKids
                 }
                 else                    //새롭게 StartBtn에 손을 올린 경우
                 {
-                    if (this._buttonTimer != null)
-                        RemoveTimer();
-
-                    CreateTimer();
+                    HandMovedNewButton(this._lastElement, btn_next);
                 }
                 _lastElement = element;
             }
@@ -284,11 +286,7 @@ namespace KinectEducationForKids
                 }
                 else                         //새롭게 ExitBtn에 손을 댄 경우
                 {
-                    if (this._buttonTimer != null)            //만일 타이머가 기존에 존재하는 경우 이를 제거한후
-                    {
-                        RemoveTimer();
-                    }
-                    CreateTimer();                      //다시 타이머를 생성한다
+                    HandMovedNewButton(this._lastElement, btn_back);
                 }
                 _lastElement = element;                 //그리고 이전 element에 ExitBtn을 등록
             }
@@ -300,6 +298,11 @@ namespace KinectEducationForKids
                 if (this._buttonTimer != null)                //타이머가 있는 경우에도 이를 제거
                 {
                     RemoveTimer();
+                }
+
+                foreach (Button btn in this._animatedBtnList)
+                {
+                    btn.Background = new SolidColorBrush(Colors.White);
                 }
             }
         }
@@ -423,6 +426,11 @@ namespace KinectEducationForKids
                 if (this._buttonTimer != null)                //타이머가 있는 경우에도 이를 제거
                 {
                     RemoveTimer();
+                }
+
+                foreach (Button btn in this._animatedBtnList)
+                {
+                    btn.Background = new SolidColorBrush(Colors.White);
                 }
             }
         }
@@ -558,6 +566,79 @@ namespace KinectEducationForKids
 
         #endregion QuizMethods
 
+        #region AnimationMethods
+        private void ApplyProgressAnimationOnButton(Button btn)
+        {
+            LinearGradientBrush brush = new LinearGradientBrush();
+            brush.EndPoint = new Point(0, 1);
+            brush.StartPoint = new Point(0, 0);
+            brush.Opacity = 0.8;
+            brush.GradientStops.Add(new GradientStop(Colors.White, 1));
+            brush.GradientStops.Add(new GradientStop(Colors.LightPink, 1));
+            btn.Background = brush;
+
+            this.RegisterName("GradientStop1", brush.GradientStops[0]);
+            this.RegisterName("GradientStop2", brush.GradientStops[1]);
+
+            DoubleAnimation animation = new DoubleAnimation();
+            animation.From = 1.0;
+            animation.To = 0.0;
+            animation.Duration = TimeSpan.FromSeconds(2);
+
+            Storyboard.SetTargetName(animation, "GradientStop1");
+            Storyboard.SetTargetProperty(animation, new PropertyPath(GradientStop.OffsetProperty));
+
+            DoubleAnimation animation2 = new DoubleAnimation();
+            animation2.From = 1.0;
+            animation2.To = 0.0;
+            animation2.Duration = TimeSpan.FromSeconds(2);
+
+            Storyboard.SetTargetName(animation2, "GradientStop2");
+            Storyboard.SetTargetProperty(animation2, new PropertyPath(GradientStop.OffsetProperty));
+
+            Storyboard sb = new Storyboard();
+            sb.Children.Add(animation);
+            sb.Children.Add(animation2);
+
+            sb.Begin(this);
+
+            this.UnregisterName("GradientStop1");
+            this.UnregisterName("GradientStop2");
+        }
+
+        #endregion AnimationMethods
+
+        #region ButtonMethods
+        private void HandMovedNewButton(UIElement lastElement, Button currentBtn)
+        {
+            if (this._buttonTimer != null)
+                RemoveTimer();
+            CreateTimer();
+
+            foreach (Button btn in this._animatedBtnList)
+            {
+                btn.Background = new SolidColorBrush(Colors.White);
+            }
+
+            HandEnterButtonHandler(currentBtn, new RoutedEventArgs());
+            this._animatedBtnList.Add(currentBtn);
+
+            if (currentBtn.Equals(btn_next))
+            {
+                this._soundManager.PlayAudio(AudioList.Lists.다음문제);
+            }
+            else if (currentBtn.Equals(btn_back))
+            {
+                this._soundManager.PlayAudio(AudioList.Lists.뒤로가기);
+            }
+        }
+
+        private void HandEnterButtonHandler(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+            ApplyProgressAnimationOnButton(btn);
+        }
+
         private void btn_back_Click(object sender, RoutedEventArgs e)
         {
             this.QuizContentCloseHandler(this, new EventArgs());
@@ -567,6 +648,6 @@ namespace KinectEducationForKids
         {
             next_quiz();
         }
-
+        #endregion ButtonMethods
     }
 }

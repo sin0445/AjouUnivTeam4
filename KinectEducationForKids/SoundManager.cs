@@ -18,7 +18,6 @@ namespace KinectEducationForKids
         private SoundPlayer _BackgroundPlayer;
         private SoundPlayer _TtsPlayer;
         private SpeechSynthesizer _Tts;
-        private Stream _TtsStream;
         #endregion MemberVariables
 
         #region Constructor
@@ -63,6 +62,12 @@ namespace KinectEducationForKids
                     break;
                 case AudioList.Lists.동물퀴즈:
                     LoadAudio("동물퀴즈");
+                    break;
+                case AudioList.Lists.이전문제:
+                    LoadAudio("이전문제");
+                    break;
+                case AudioList.Lists.다음문제:
+                    LoadAudio("다음문제");
                     break;
                 default:
                     break;
@@ -159,7 +164,9 @@ namespace KinectEducationForKids
             모음쓰기,
             뒤로가기,
             과일퀴즈,
-            동물퀴즈
+            동물퀴즈,
+            이전문제,
+            다음문제
         };
     }
     #endregion AudioList

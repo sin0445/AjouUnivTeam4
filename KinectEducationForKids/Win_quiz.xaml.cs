@@ -419,7 +419,7 @@ namespace KinectEducationForKids
 
         private void btn_animal_Click(object sender, RoutedEventArgs e)
         {
-            this._win_quiz_content = new Win_quiz_content(this._mainWindow, this._KinectController, QuizElementListLibrary.QUIZTYPE.ANIMAL);
+            this._win_quiz_content = new Win_quiz_content(this._mainWindow, this._KinectController, QuizElementListLibrary.QUIZTYPE.ANIMAL, this._soundManager);
             this._win_quiz_content.QuizContentCloseHandler += QuizContentClose;
             this.view_quiz.Visibility = Visibility.Hidden;
             _mainWindow.LayoutRoot.Children.Add(_win_quiz_content);
@@ -427,7 +427,7 @@ namespace KinectEducationForKids
 
         private void btn_fruit_Click(object sender, RoutedEventArgs e)
         {
-            this._win_quiz_content = new Win_quiz_content(this._mainWindow, this._KinectController, QuizElementListLibrary.QUIZTYPE.FRUIT);
+            this._win_quiz_content = new Win_quiz_content(this._mainWindow, this._KinectController, QuizElementListLibrary.QUIZTYPE.FRUIT, this._soundManager);
             this._win_quiz_content.QuizContentCloseHandler += QuizContentClose;
             this.view_quiz.Visibility = Visibility.Hidden;
             _mainWindow.LayoutRoot.Children.Add(_win_quiz_content);

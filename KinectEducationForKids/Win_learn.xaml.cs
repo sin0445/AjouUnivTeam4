@@ -414,16 +414,10 @@ namespace KinectEducationForKids
             Button btn = (Button)sender;
             ApplyProgressAnimationOnButton(btn);
         }
-
-        private void HandLeaveButtonHandler(object sender, RoutedEventArgs e)
-        {
-            Button btn = (Button)sender;
-            btn.Background = new SolidColorBrush(Colors.White);
-        }
         
         private void btn_con_Click(object sender, RoutedEventArgs e)
         {
-            this.win_learn_content = new Win_learn_content(this._mainWindow, this._KinectController, CharacterListLibrary.CHARACTERTYPE.CONSONANT);
+            this.win_learn_content = new Win_learn_content(this._mainWindow, this._KinectController, CharacterListLibrary.CHARACTERTYPE.CONSONANT, this._soundManager);
             this.win_learn_content.LearnContentCloseHandler += LearnContentClose;
             this.Visibility = Visibility.Hidden;
             this._layoutRoot.Children.Add(this.win_learn_content);
@@ -431,7 +425,7 @@ namespace KinectEducationForKids
 
         private void btn_vow_Click(object sender, RoutedEventArgs e)
         {
-            this.win_learn_content = new Win_learn_content(this._mainWindow, this._KinectController, CharacterListLibrary.CHARACTERTYPE.VOWEL);
+            this.win_learn_content = new Win_learn_content(this._mainWindow, this._KinectController, CharacterListLibrary.CHARACTERTYPE.VOWEL, this._soundManager);
             this.win_learn_content.LearnContentCloseHandler += LearnContentClose;
             this.Visibility = Visibility.Hidden;
             this._layoutRoot.Children.Add(this.win_learn_content);
