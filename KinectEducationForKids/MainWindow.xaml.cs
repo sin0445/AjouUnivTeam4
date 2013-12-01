@@ -32,7 +32,8 @@ namespace KinectEducationForKids
         private const int _hoverTime = 20;
         private int _ticks;
         private UIElement _lastElement;
-        private SoundPlayer _effectPlayer;
+        private SoundManager _soundManager;
+        //private SoundPlayer _effectPlayer;
 
         private Win_learn win_learn;
         private Win_quiz win_quiz;
@@ -56,7 +57,7 @@ namespace KinectEducationForKids
             this._KinectDevice = this._KinectController._KinectDevice;
             this._Skeletons = new Skeleton[this._KinectDevice.SkeletonStream.FrameSkeletonArrayLength];
             this._KinectDevice.SkeletonFrameReady += this.MainWindow_SkeletonFrameReady;
-            this._effectPlayer = new SoundPlayer();
+            this._soundManager = new SoundManager();
         }
 
         private void UninitializeKinectDevice()
@@ -232,7 +233,8 @@ namespace KinectEducationForKids
                         RemoveTimer();
 
                     CreateTimer();
-                    SetSoundPlayer(this._effectPlayer, Properties.Resources.hand_over);
+                    this._soundManager.PlayAudio(AudioList.Lists.한글쓰기);
+                    //SetSoundPlayer(this._effectPlayer, Properties.Resources.hand_over);
                 }
                 _lastElement = element;
             }
@@ -258,7 +260,8 @@ namespace KinectEducationForKids
                         RemoveTimer();
 
                     CreateTimer();
-                    SetSoundPlayer(this._effectPlayer, Properties.Resources.hand_over);
+                    this._soundManager.PlayAudio(AudioList.Lists.한글퀴즈);
+                    //SetSoundPlayer(this._effectPlayer, Properties.Resources.hand_over);
                 }
                 _lastElement = element;
             }
@@ -284,7 +287,8 @@ namespace KinectEducationForKids
                         RemoveTimer();
                     }
                     CreateTimer();                      //다시 타이머를 생성한다
-                    SetSoundPlayer(this._effectPlayer, Properties.Resources.hand_over);
+                    this._soundManager.PlayAudio(AudioList.Lists.뒤로가기);
+                    //SetSoundPlayer(this._effectPlayer, Properties.Resources.hand_over);
                 }
                 _lastElement = element;                 //그리고 이전 element에 ExitBtn을 등록
             }

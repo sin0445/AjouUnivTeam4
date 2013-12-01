@@ -467,11 +467,12 @@ namespace KinectEducationForKids
 
         private void SettingPrevPuzzle()
         {
-            if (this._CharacterIndex > 0)
+            if (this._CharacterIndex > 1)
             {
                 this._brush = this._BrushPallete[this._BrushPicker.Next(this._BrushPallete.Length - 1)];
 
-                this._CurrentCharacter = this._CharacterList[--this._CharacterIndex];
+                this._CurrentCharacter = this._CharacterList[this._CharacterIndex-2];
+                this._CharacterIndex--;
                 this._StrokeDotIndex = 0;
                 this._StrokeIndex = 0;
                 this._CurrentStroke = this._CurrentCharacter.StrokeDotIndex[this._StrokeIndex];
@@ -578,7 +579,7 @@ namespace KinectEducationForKids
 
         private void btn_prev_Click(object sender, RoutedEventArgs e)
         {
-            if (this._CharacterIndex <= 0)
+            if (this._CharacterIndex <= 1)
             {
                 btn_back_Click(btn_back, new RoutedEventArgs());
             }

@@ -37,6 +37,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Kinect, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Speech, Version=11.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\Microsoft SDKs\Speech\v11.0\Assembly\Microsoft.Speech.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -58,6 +62,7 @@
     </ApplicationDefinition>
     <Compile Include="CharacterListLibrary.cs" />
     <Compile Include="QuizElementListLibrary.cs" />
+    <Compile Include="SoundManager.cs" />
     <Compile Include="Win_learn.xaml.cs">
       <DependentUpon>Win_learn.xaml</DependentUpon>
     </Compile>
@@ -66,9 +71,6 @@
     </Compile>
     <Compile Include="Win_quiz.xaml.cs">
       <DependentUpon>Win_quiz.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Win_quiz_ani.xaml.cs">
-      <DependentUpon>Win_quiz_ani.xaml</DependentUpon>
     </Compile>
     <Compile Include="Win_quiz_content.xaml.cs">
       <DependentUpon>Win_quiz_content.xaml</DependentUpon>
@@ -95,10 +97,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Win_quiz.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Win_quiz_ani.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
