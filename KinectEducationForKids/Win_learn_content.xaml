@@ -31,22 +31,22 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Button Name="btn_prev" Grid.Row="0" Width="375" Height="158" Margin="30">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_prev.jpg" />
-                    </Button.Background>
+                <Button Name="btn_prev" Grid.Row="0" Width="375" Height="158" Margin="30" Background="White">
+                    <Button.Content>
+                        <Image Source="/KinectEducationForKids;component/Images/btn_prev.jpg" />
+                    </Button.Content>
                 </Button>
 
-                <Button Name="btn_next" Grid.Row="1" Width="375" Height="158" Margin="30">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_next.png" />
-                    </Button.Background>
+                <Button Name="btn_next" Grid.Row="1" Width="375" Height="158" Margin="30" Background="White">
+                    <Button.Content>
+                        <Image Source="/KinectEducationForKids;component/Images/btn_next.png" />
+                    </Button.Content>
                 </Button>
 
-                <Button Name="btn_back" Grid.Row="2" Width="375" Height="158" Margin="30" Click="btn_back_Click">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/KinectEducationForKids;component/Images/btn_back2.png" />
-                    </Button.Background>
+                <Button Name="btn_back" Grid.Row="2" Width="375" Height="158" Margin="30" Click="btn_back_Click" Background="White">
+                    <Button.Content>
+                        <Image Source="/KinectEducationForKids;component/Images/btn_back2.png" />
+                    </Button.Content>
                 </Button>
             </Grid>
         </StackPanel>
