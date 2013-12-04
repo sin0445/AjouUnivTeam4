@@ -72,6 +72,9 @@ namespace KinectEducationForKids
                 case AudioList.Lists.다음문제:
                     LoadAudio(this._TtsPlayer, this._Tts, "다음문제");
                     break;
+                case AudioList.Lists.물방울효과:
+                    LoadAudio(this._EffectPlayer, Properties.Resources.hand_over);
+                    break;
                 case AudioList.Lists.메인배경:
                     LoadAudio(this._BackgroundPlayer, "bgm_main.mp3");
                     break;
@@ -181,6 +184,7 @@ namespace KinectEducationForKids
             동물퀴즈,
             이전문제,
             다음문제,
+            물방울효과 = 41,
             메인배경 = 71,
             따라쓰기배경,
             퀴즈배경

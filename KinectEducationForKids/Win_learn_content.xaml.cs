@@ -390,6 +390,7 @@ namespace KinectEducationForKids
 
                 if (length < 25)            //손의 위치가 점으로부터 일정 거리내에 존재하는 경우
                 {
+                    this._soundManager.PlayAudio(AudioList.Lists.물방울효과);
                     if (lastPoint > 0)
                     {
                         this._CrayonElement.Points.RemoveAt(lastPoint);

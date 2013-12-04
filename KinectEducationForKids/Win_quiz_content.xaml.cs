@@ -569,6 +569,7 @@ namespace KinectEducationForKids
 
         private void checking_answer(int user_answer, Image button, Button btn)
         {
+            this._soundManager.PlayAudio(AudioList.Lists.물방울효과);
             // 사용자 선택 답과 정답 비교
             if (user_answer.ToString().Equals(_quizElements.QuizList[5]))
             {

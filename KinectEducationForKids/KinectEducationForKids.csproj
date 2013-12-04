@@ -180,7 +180,9 @@
     <Content Include="Media\bgm_quiz.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Media\hand_over.wav" />
+    <Content Include="Media\hand_over.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\btn_apple.png" />
