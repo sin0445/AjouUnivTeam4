@@ -56,6 +56,8 @@ namespace KinectEducationForKids
             this._KinectDevice.SkeletonFrameReady += this.MainWindow_SkeletonFrameReady;
             this._soundManager = new SoundManager();
             this._animatedBtnList = new List<Button>();
+
+            this._soundManager.PlayAudio(AudioList.Lists.메인배경);
         }
 
         private void UninitializeKinectDevice()
@@ -405,6 +407,7 @@ namespace KinectEducationForKids
 
         private void btn_learn_Click(object sender, RoutedEventArgs e)
         {
+            this._soundManager.PauseBackground();
             this.win_learn = new Win_learn(this, this._KinectController, this._soundManager);
             this.win_learn.LearnCloseHandler += LearnClose;
             Main.Visibility = Visibility.Hidden;
@@ -416,10 +419,12 @@ namespace KinectEducationForKids
             Main.Visibility = Visibility.Visible;
             LayoutRoot.Children.Remove(this.win_learn);
             this.win_learn = null;
+            this._soundManager.PlayAudio(AudioList.Lists.메인배경);
         }
 
         private void btn_quiz_Click(object sender, RoutedEventArgs e)
         {
+            this._soundManager.PauseBackground();
             this.win_quiz = new Win_quiz(this, this._KinectController, this._soundManager);
             this.win_quiz.QuizCloseHandler += QuizClose;
             Main.Visibility = Visibility.Hidden;
@@ -431,10 +436,12 @@ namespace KinectEducationForKids
             Main.Visibility = Visibility.Visible;
             LayoutRoot.Children.Remove(this.win_quiz);
             this.win_quiz = null;
+            this._soundManager.PlayAudio(AudioList.Lists.메인배경);
         }
 
         private void btn_exit_Click(object sender, RoutedEventArgs e)
         {
+            this._soundManager.PauseBackground();
             LayoutRoot.Children.Clear();
             Close();
         }

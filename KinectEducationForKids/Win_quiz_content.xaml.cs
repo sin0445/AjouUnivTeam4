@@ -56,6 +56,7 @@ namespace KinectEducationForKids
             this._KinectController = control;
             this._soundManager = sound;
             this._animatedBtnList = new List<Button>();
+            this._soundManager.PlayAudio(AudioList.Lists.퀴즈배경);
 
             this.Loaded += (s, e) => { InitQuizContentWindow(); };
             this.Unloaded += (s, e) => { UninitQuizContentWindow(); };
@@ -712,6 +713,7 @@ namespace KinectEducationForKids
                 dispatcherTimer.Stop();
             };
 
+            this._soundManager.PauseBackground();
             dispatcherTimer.Start();
         }
 

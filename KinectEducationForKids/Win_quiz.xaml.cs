@@ -51,6 +51,7 @@ namespace KinectEducationForKids
             this._KinectController = control;
             this._soundManager = sound;
             this._animatedBtnList = new List<Button>();
+            this._soundManager.PlayAudio(AudioList.Lists.메인배경);
 
             this.Loaded += (s, e) => { InitQuizWindow(); };
             this.Unloaded += (s, e) => { UninitQuizWindow(); };
@@ -414,11 +415,13 @@ namespace KinectEducationForKids
 
         private void btn_back_Click(object sender, RoutedEventArgs e)
         {
+            this._soundManager.PauseBackground();
             this.QuizCloseHandler(this, new EventArgs());
         }
 
         private void btn_animal_Click(object sender, RoutedEventArgs e)
         {
+            this._soundManager.PauseBackground();
             this._win_quiz_content = new Win_quiz_content(this._mainWindow, this._KinectController, QuizElementListLibrary.QUIZTYPE.ANIMAL, this._soundManager);
             this._win_quiz_content.QuizContentCloseHandler += QuizContentClose;
             this.view_quiz.Visibility = Visibility.Hidden;
@@ -427,6 +430,7 @@ namespace KinectEducationForKids
 
         private void btn_fruit_Click(object sender, RoutedEventArgs e)
         {
+            this._soundManager.PauseBackground();
             this._win_quiz_content = new Win_quiz_content(this._mainWindow, this._KinectController, QuizElementListLibrary.QUIZTYPE.FRUIT, this._soundManager);
             this._win_quiz_content.QuizContentCloseHandler += QuizContentClose;
             this.view_quiz.Visibility = Visibility.Hidden;
@@ -438,6 +442,7 @@ namespace KinectEducationForKids
             this.view_quiz.Visibility = Visibility.Visible;
             _mainWindow.LayoutRoot.Children.Remove(this._win_quiz_content);
             this._win_quiz_content = null;
+            this._soundManager.PlayAudio(AudioList.Lists.메인배경);
         }
         #endregion ButtonMethods
     }

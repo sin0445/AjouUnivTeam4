@@ -63,6 +63,8 @@ namespace KinectEducationForKids
             this._KinectController = control;
             this._soundManager = sound;
             this._animatedBtnList = new List<Button>();
+            this._soundManager.PlayAudio(AudioList.Lists.따라쓰기배경);
+
             PrepareLearnContent(type);
 
             this.Loaded += (s, e) => { InitLearnContentWindow(); };
@@ -730,6 +732,7 @@ namespace KinectEducationForKids
                 dispatcherTimer.Stop();
             };
 
+            this._soundManager.PauseBackground();
             dispatcherTimer.Start();
         }
         #endregion ButtonMethods

@@ -171,6 +171,15 @@
     <Resource Include="Images\img_back.jpg" />
     <Resource Include="Images\img_next.jpg" />
     <Resource Include="Images\img_prev.jpg" />
+    <Content Include="Media\bgm_draw.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Media\bgm_main.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Media\bgm_quiz.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Media\hand_over.wav" />
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +220,17 @@
     <Resource Include="Images\img_pig.jpg" />
     <Resource Include="Images\img_rabbit.jpg" />
     <Resource Include="Images\img_racoon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

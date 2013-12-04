@@ -8,6 +8,8 @@ using System.ComponentModel;
 using Microsoft.Speech;
 using Microsoft.Speech.Synthesis;
 using Microsoft.Speech.AudioFormat;
+using WMPLib;
+
 
 namespace KinectEducationForKids
 {
@@ -15,7 +17,7 @@ namespace KinectEducationForKids
     {
         #region MemberVariables
         private SoundPlayer _EffectPlayer;
-        private SoundPlayer _BackgroundPlayer;
+        private WindowsMediaPlayer _BackgroundPlayer;
         private SoundPlayer _TtsPlayer;
         private SpeechSynthesizer _Tts;
         #endregion MemberVariables
@@ -24,15 +26,16 @@ namespace KinectEducationForKids
         public SoundManager()
         {
             this._EffectPlayer = new SoundPlayer();
-            this._BackgroundPlayer = new SoundPlayer();
+            this._BackgroundPlayer = new WindowsMediaPlayer();
             this._TtsPlayer = new SoundPlayer();
 
             this._EffectPlayer.LoadCompleted += new AsyncCompletedEventHandler(PlayerStreamIsLoaded);
-            this._BackgroundPlayer.LoadCompleted += new AsyncCompletedEventHandler(PlayerStreamIsLoaded);
-            
+            this._BackgroundPlayer.settings.setMode("loop", true);
+
             //TTS 기본 설정하는 부분 추가
             this._Tts = new SpeechSynthesizer();
             this._Tts.SelectVoice("Microsoft Server Speech Text to Speech Voice (ko-KR, Heami)");
+            this._Tts.TtsVolume = 100;
         }
 
         public void PlayAudio(AudioList.Lists a)
@@ -40,34 +43,43 @@ namespace KinectEducationForKids
             switch (a)
             {
                 case AudioList.Lists.종료하기:
-                    LoadAudio("종료하기");
+                    LoadAudio(this._TtsPlayer, this._Tts, "종료하기");
                     break;
                 case AudioList.Lists.한글쓰기:
-                    LoadAudio("한글쓰기");
+                    LoadAudio(this._TtsPlayer, this._Tts, "한글쓰기");
                     break;
                 case AudioList.Lists.한글퀴즈:
-                    LoadAudio("한글퀴즈");
+                    LoadAudio(this._TtsPlayer, this._Tts, "한글퀴즈");
                     break;
                 case AudioList.Lists.자음쓰기:
-                    LoadAudio("자음쓰기");
+                    LoadAudio(this._TtsPlayer, this._Tts, "자음쓰기");
                     break;
                 case AudioList.Lists.모음쓰기:
-                    LoadAudio("모음쓰기");
+                    LoadAudio(this._TtsPlayer, this._Tts, "모음쓰기");
                     break;
                 case AudioList.Lists.뒤로가기:
-                    LoadAudio("뒤로가기");
+                    LoadAudio(this._TtsPlayer, this._Tts, "뒤로가기");
                     break;
                 case AudioList.Lists.과일퀴즈:
-                    LoadAudio("과일퀴즈");
+                    LoadAudio(this._TtsPlayer, this._Tts, "과일퀴즈");
                     break;
                 case AudioList.Lists.동물퀴즈:
-                    LoadAudio("동물퀴즈");
+                    LoadAudio(this._TtsPlayer, this._Tts, "동물퀴즈");
                     break;
                 case AudioList.Lists.이전문제:
-                    LoadAudio("이전문제");
+                    LoadAudio(this._TtsPlayer, this._Tts, "이전문제");
                     break;
                 case AudioList.Lists.다음문제:
-                    LoadAudio("다음문제");
+                    LoadAudio(this._TtsPlayer, this._Tts, "다음문제");
+                    break;
+                case AudioList.Lists.메인배경:
+                    LoadAudio(this._BackgroundPlayer, "bgm_main.mp3");
+                    break;
+                case AudioList.Lists.따라쓰기배경:
+                    LoadAudio(this._BackgroundPlayer, "bgm_draw.mp3");
+                    break;
+                case AudioList.Lists.퀴즈배경:
+                    LoadAudio(this._BackgroundPlayer, "bgm_quiz.mp3");
                     break;
                 default:
                     break;
@@ -90,15 +102,25 @@ namespace KinectEducationForKids
             }
         }
 
-        private void LoadAudio(string ttsSentence)
+        private void LoadAudio(SoundPlayer player, SpeechSynthesizer tts, string ttsSentence)
         {
             MemoryStream stream = new MemoryStream();
-            this._Tts.SetOutputToWaveStream(stream);
-            this._Tts.Speak(new Prompt(ttsSentence));
+            tts.SetOutputToWaveStream(stream);
+            tts.Speak(new Prompt(ttsSentence));
             stream.Position = 0;
-            this._TtsPlayer.Stream = stream;
-            this._TtsPlayer.Play();
-            this._Tts.SetOutputToNull();
+            player.Stream = stream;
+            player.Play();
+            tts.SetOutputToNull();
+        }
+
+        private void LoadAudio(WindowsMediaPlayer player, string soundName)
+        {
+            string fullPathUrl = Environment.CurrentDirectory + "\\Media\\" + soundName;
+
+            if (player.playState == WMPPlayState.wmppsPlaying)
+                player.controls.stop();
+            player.URL = fullPathUrl;
+            player.controls.play();
         }
 
         private void PauseAudio(SoundPlayer player)
@@ -113,7 +135,7 @@ namespace KinectEducationForKids
 
         public void PauseBackground()
         {
-            PauseAudio(this._BackgroundPlayer);
+            this._BackgroundPlayer.controls.stop();
         }
 
         public void PauseTTS()
@@ -133,15 +155,7 @@ namespace KinectEducationForKids
         private void PlayerStreamIsLoaded(object sender, AsyncCompletedEventArgs e)
         {
             SoundPlayer player = (SoundPlayer)sender;
-
-            if (sender.Equals(this._BackgroundPlayer))
-            {
-                player.PlayLooping();
-            }
-            else
-            {
-                player.Play();
-            }
+            player.Play();
         }
         #endregion EventHandler
     }
@@ -166,7 +180,10 @@ namespace KinectEducationForKids
             과일퀴즈,
             동물퀴즈,
             이전문제,
-            다음문제
+            다음문제,
+            메인배경 = 71,
+            따라쓰기배경,
+            퀴즈배경
         };
     }
     #endregion AudioList

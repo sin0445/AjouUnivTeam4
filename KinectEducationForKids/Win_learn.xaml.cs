@@ -51,6 +51,7 @@ namespace KinectEducationForKids
             this._KinectController = control;
             this._soundManager = sound;
             this._animatedBtnList = new List<Button>();
+            this._soundManager.PlayAudio(AudioList.Lists.메인배경);
 
             this.Loaded += (s, e) => { InitLearnWindow(); };
             this.Unloaded += (s, e) => { UninitLearnWindow(); };
@@ -417,6 +418,7 @@ namespace KinectEducationForKids
         
         private void btn_con_Click(object sender, RoutedEventArgs e)
         {
+            this._soundManager.PauseBackground();
             this.win_learn_content = new Win_learn_content(this._mainWindow, this._KinectController, CharacterListLibrary.CHARACTERTYPE.CONSONANT, this._soundManager);
             this.win_learn_content.LearnContentCloseHandler += LearnContentClose;
             this.Visibility = Visibility.Hidden;
@@ -425,6 +427,7 @@ namespace KinectEducationForKids
 
         private void btn_vow_Click(object sender, RoutedEventArgs e)
         {
+            this._soundManager.PauseBackground();
             this.win_learn_content = new Win_learn_content(this._mainWindow, this._KinectController, CharacterListLibrary.CHARACTERTYPE.VOWEL, this._soundManager);
             this.win_learn_content.LearnContentCloseHandler += LearnContentClose;
             this.Visibility = Visibility.Hidden;
@@ -436,10 +439,12 @@ namespace KinectEducationForKids
             this._layoutRoot.Children.Remove(this.win_learn_content);
             this.Visibility = Visibility.Visible;
             this.win_learn_content = null;
+            this._soundManager.PlayAudio(AudioList.Lists.메인배경);
         }
 
         private void btn_back_Click(object sender, RoutedEventArgs e)
         {
+            this._soundManager.PauseBackground();
             this.LearnCloseHandler(this, new EventArgs());
         }
         #endregion ButtonMethods
