@@ -864,7 +864,7 @@ namespace KinectEducationForKids
         {
             this.DotList = new List<Point>();
             this.StrokeDotIndex = new List<List<int>>();
-            this.CharacterName = "히흫";
+            this.CharacterName = "히읗";
             setDotList();
             setStrokeDotIndex();
         }
@@ -941,7 +941,7 @@ namespace KinectEducationForKids
         {
             this.DotList = new List<Point>();
             this.StrokeDotIndex = new List<List<int>>();
-            this.CharacterName = "ㅏ(아)";
+            this.CharacterName = "아";
             setDotList();
             setStrokeDotIndex();
         }
@@ -986,7 +986,7 @@ namespace KinectEducationForKids
         {
             this.DotList = new List<Point>();
             this.StrokeDotIndex = new List<List<int>>();
-            this.CharacterName = "ㅑ(야)";
+            this.CharacterName = "야";
             setDotList();
             setStrokeDotIndex();
         }
@@ -1037,7 +1037,7 @@ namespace KinectEducationForKids
         {
             this.DotList = new List<Point>();
             this.StrokeDotIndex = new List<List<int>>();
-            this.CharacterName = "ㅓ(어)";
+            this.CharacterName = "어";
             setDotList();
             setStrokeDotIndex();
         }
@@ -1082,7 +1082,7 @@ namespace KinectEducationForKids
         {
             this.DotList = new List<Point>();
             this.StrokeDotIndex = new List<List<int>>();
-            this.CharacterName = "ㅕ(여)";
+            this.CharacterName = "여";
             setDotList();
             setStrokeDotIndex();
         }
@@ -1134,7 +1134,7 @@ namespace KinectEducationForKids
         {
             this.DotList = new List<Point>();
             this.StrokeDotIndex = new List<List<int>>();
-            this.CharacterName = "ㅗ(오)";
+            this.CharacterName = "오";
             setDotList();
             setStrokeDotIndex();
         }
@@ -1182,7 +1182,7 @@ namespace KinectEducationForKids
         {
             this.DotList = new List<Point>();
             this.StrokeDotIndex = new List<List<int>>();
-            this.CharacterName = "ㅛ(요)";
+            this.CharacterName = "요";
             setDotList();
             setStrokeDotIndex();
         }
@@ -1237,7 +1237,7 @@ namespace KinectEducationForKids
         {
             this.DotList = new List<Point>();
             this.StrokeDotIndex = new List<List<int>>();
-            this.CharacterName = "ㅜ(우)";
+            this.CharacterName = "우";
             setDotList();
             setStrokeDotIndex();
         }
@@ -1282,7 +1282,7 @@ namespace KinectEducationForKids
         {
             this.DotList = new List<Point>();
             this.StrokeDotIndex = new List<List<int>>();
-            this.CharacterName = "ㅠ(유)";
+            this.CharacterName = "유";
             setDotList();
             setStrokeDotIndex();
         }
@@ -1336,7 +1336,7 @@ namespace KinectEducationForKids
         {
             this.DotList = new List<Point>();
             this.StrokeDotIndex = new List<List<int>>();
-            this.CharacterName = "ㅡ(으)";
+            this.CharacterName = "으";
             setDotList();
             setStrokeDotIndex();
         }
@@ -1374,7 +1374,7 @@ namespace KinectEducationForKids
         {
             this.DotList = new List<Point>();
             this.StrokeDotIndex = new List<List<int>>();
-            this.CharacterName = "ㅣ(이)";
+            this.CharacterName = "이";
             setDotList();
             setStrokeDotIndex();
         }

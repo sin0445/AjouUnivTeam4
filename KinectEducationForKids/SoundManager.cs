@@ -36,7 +36,12 @@ namespace KinectEducationForKids
             this._Tts = new SpeechSynthesizer();
             this._Tts.SelectVoice("Microsoft Server Speech Text to Speech Voice (ko-KR, Heami)");
             this._Tts.TtsVolume = 100;
+            this._Tts.Volume = 100;
         }
+        
+        #endregion Constructor
+
+        #region CoreMethods
 
         public void PlayAudio(AudioList.Lists a)
         {
@@ -88,9 +93,14 @@ namespace KinectEducationForKids
                     break;
             }
         }
-        #endregion Constructor
 
-        #region CoreMethods
+        public void PlayAudio(string sentence)
+        {
+            string TtsSentence = sentence;
+
+            LoadAudio(this._TtsPlayer, this._Tts, TtsSentence);
+        }
+        
         /*
          * LoadAudio()
          * 파라메터로 Stream 받아와서 SoundPlayer에 AsyncLoad 시킴

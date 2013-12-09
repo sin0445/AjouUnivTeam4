@@ -238,6 +238,14 @@ namespace KinectEducationForKids
             }
             else if(handPoint.Y > img_quiz.ActualHeight)
             {
+                if (this._animatedBtnList.Count > 0)
+                {
+                    foreach (Button btn in this._animatedBtnList)
+                    {
+                        btn.Background = new SolidColorBrush(Colors.White);
+                    }
+                    this._animatedBtnList.Clear();
+                }
                 TrackHandLocationOnQuiz(hand);
             }
         }
@@ -585,6 +593,7 @@ namespace KinectEducationForKids
                 dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
                 dispatcherTimer.Tick += delegate
                 {
+                    this._soundManager.PlayAudio(this._quizElements.getAnswerName());
                     button.Source = (ImageSource)imgConv.ConvertFromString(temp_source);
                     btn.Background = background;
                     next_quiz();

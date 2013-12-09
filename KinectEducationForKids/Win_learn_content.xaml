@@ -33,19 +33,19 @@
                 </Grid.RowDefinitions>
                 <Button Name="btn_prev" Grid.Row="0" Width="375" Height="158" Margin="30" Click="btn_prev_Click" Background="White">
                     <Button.Content>
-                        <Image Source="/KinectEducationForKids;component/Images/btn_prev.jpg" />
+                        <Image Source="/KinectEducationForKids;component/Images/btn_prev.jpg" Stretch="Fill"/>
                     </Button.Content>
                 </Button>
 
                 <Button Name="btn_next" Grid.Row="1" Width="375" Height="158" Margin="30" Click="btn_next_Click" Background="White">
                     <Button.Content>
-                        <Image Source="/KinectEducationForKids;component/Images/btn_next.png" />
+                        <Image Source="/KinectEducationForKids;component/Images/btn_next.jpg" Stretch="Fill"/>
                     </Button.Content>
                 </Button>
 
                 <Button Name="btn_back" Grid.Row="2" Width="375" Height="158" Margin="30" Click="btn_back_Click" Background="White">
                     <Button.Content>
-                        <Image Source="/KinectEducationForKids;component/Images/btn_back2.png" />
+                        <Image Source="/KinectEducationForKids;component/Images/btn_back2.jpg" Stretch="Fill"/>
                     </Button.Content>
                 </Button>
             </Grid>

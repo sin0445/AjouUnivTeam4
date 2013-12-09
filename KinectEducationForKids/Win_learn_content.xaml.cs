@@ -37,6 +37,7 @@ namespace KinectEducationForKids
         private const int _hoverTime = 20;
         private SoundManager _soundManager;
         private List<Button> _animatedBtnList;
+        private string _drawWord;
 
         private List<CharacterBase> _CharacterList;
         private int _CharacterIndex;                //글자 리스트 중 몇 번째 글자를 제공중인지를 알려주는 인덱스
@@ -239,6 +240,14 @@ namespace KinectEducationForKids
 
             if (targetPoint.X < panelWidth && targetPoint.Y < panelHeight)
             {
+                if (this._animatedBtnList.Count > 0)
+                {
+                    foreach (Button btn in this._animatedBtnList)
+                    {
+                        btn.Background = new SolidColorBrush(Colors.White);
+                    }
+                    this._animatedBtnList.Clear();
+                }
                 TrackHandLocationOnPuzzle(hand.Position);
             }
             else
@@ -334,6 +343,7 @@ namespace KinectEducationForKids
                 {
                     btn.Background = new SolidColorBrush(Colors.White);
                 }
+                this._animatedBtnList.Clear();
             }
         }
         #endregion TrackingMethods
@@ -448,7 +458,9 @@ namespace KinectEducationForKids
             this._BrushPallete = new []{Brushes.Black, Brushes.BlueViolet, Brushes.Crimson, Brushes.ForestGreen, Brushes.HotPink, 
                                         Brushes.Khaki, Brushes.Yellow, Brushes.Violet, Brushes.Orange, Brushes.Navy, Brushes.Aqua};
             this._BrushPicker = new Random();
-            
+
+            this._soundManager.PlayAudio(this._CharacterList[0].CharacterName);
+
             SettingNextPuzzle();
         }
 
@@ -465,6 +477,7 @@ namespace KinectEducationForKids
                 DrawCharacterDots(this._CurrentCharacter);
 
                 ExtendNextDotCircle(this._StrokeDotIndex);
+                this._drawWord = this._CurrentCharacter.CharacterName;
             }
         }
 
@@ -482,6 +495,7 @@ namespace KinectEducationForKids
                 DrawCharacterDots(this._CurrentCharacter);
 
                 ExtendNextDotCircle(this._StrokeDotIndex);
+                this._drawWord = this._CurrentCharacter.CharacterName;
             }
         }
 
@@ -510,12 +524,10 @@ namespace KinectEducationForKids
                     Canvas.SetTop(dotContainer, character.DotList[i].Y - (dotContainer.Height / 2));
                     Canvas.SetLeft(dotContainer, character.DotList[i].X - (dotContainer.Width / 2));
                     PuzzleBoardElement.Children.Add(dotContainer);
-
-                    _img_path = this._CurrentCharacter.getPath();
-
-                    ImageSourceConverter imgConv = new ImageSourceConverter();
-                    img_word.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _img_path.ToString());
                 }
+                _img_path = this._CurrentCharacter.getPath();
+                ImageSourceConverter imgConv = new ImageSourceConverter();
+                img_word.Source = (ImageSource)imgConv.ConvertFromString("pack://application:,,/Images/" + _img_path.ToString());
             }
         }
 
@@ -617,6 +629,7 @@ namespace KinectEducationForKids
             {
                 btn.Background = new SolidColorBrush(Colors.White);
             }
+            this._animatedBtnList.Clear();
 
             HandEnterButtonHandler(currentBtn, new RoutedEventArgs());
             this._animatedBtnList.Add(currentBtn);
@@ -662,6 +675,12 @@ namespace KinectEducationForKids
                 dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
                 dispatcherTimer.Tick += delegate
                 {
+                    if (this._drawWord != null)
+                    {
+                        this._soundManager.PlayAudio(this._drawWord);
+                        this._drawWord = null;
+                    }
+
                     image_notify.Source = null;
                     panel_image.Visibility = Visibility.Hidden;
                     panel1.Visibility = Visibility.Visible;
@@ -696,6 +715,12 @@ namespace KinectEducationForKids
                 dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
                 dispatcherTimer.Tick += delegate
                 {
+                    if (this._drawWord != null)
+                    {
+                        this._soundManager.PlayAudio(this._drawWord);
+                        this._drawWord = null;
+                    }
+
                     image_notify.Source = null;
                     panel_image.Visibility = Visibility.Hidden;
                     panel1.Visibility = Visibility.Visible;

@@ -60,6 +60,7 @@ namespace KinectEducationForKids
         public List<string> QuizElementList;
         public List<string> QuizButtonPathList;
         public List<string> QuizImagePathList;
+        public List<string> QuizElementNameList;
 
         // 문제 중복 방지
         private List<bool> QuizDuplicateList;
@@ -86,6 +87,7 @@ namespace KinectEducationForKids
             this.QuizElementList = elementList;
             this.QuizButtonPathList = addButtonsPath(elementList);
             this.QuizImagePathList = addImagesPath(elementList);
+            this.QuizElementNameList = addElementName(elementList);
             this.QuizDuplicateList = new List<bool>();
             for (int i = 0; i < this.QuizElementList.Count; i++)
             {
@@ -110,6 +112,88 @@ namespace KinectEducationForKids
                 imgPathList.Add("img_" + elementList[i] + ".jpg");
             }
             return imgPathList;
+        }
+
+        private List<string> addElementName(List<string> elementList)
+        {
+            List<string> elementNameList = new List<string>();
+
+            for (int i = 0; i < elementList.Count; i++)
+            {
+                elementNameList.Add(ConvertEnglishWordToKorean(elementList[i]));
+            }
+
+            return elementNameList;
+        }
+
+        private string ConvertEnglishWordToKorean(string engWord)
+        {
+
+                    //QuizElementList.Add("elephant");
+                    //QuizElementList.Add("giraffe");
+                    //QuizElementList.Add("hippo");
+                    //QuizElementList.Add("lion");
+                    //QuizElementList.Add("monkey");
+                    //QuizElementList.Add("penguin");
+                    //QuizElementList.Add("pig");
+                    //QuizElementList.Add("rabbit");
+                    //QuizElementList.Add("racoon");
+
+                    //QuizElementList.Add("apple");
+                    //QuizElementList.Add("banana");
+                    //QuizElementList.Add("grape");
+                    //QuizElementList.Add("kiwi");
+                    //QuizElementList.Add("lemon");
+                    //QuizElementList.Add("melon");
+                    //QuizElementList.Add("orange");
+                    //QuizElementList.Add("pear");
+            switch (engWord)
+            {
+                case "elephant":
+                    return "코끼리";
+                case "giraffe":
+                    return "기린";
+                case "hippo":
+                    return "하마";
+                case "lion":
+                    return "사자";
+                case "monkey":
+                    return "원숭이";
+                case "penguin":
+                    return "펭귄";
+                case "pig":
+                    return "돼지";
+                case "rabbit":
+                    return "토끼";
+                case "racoon":
+                    return "라쿤";
+                case "apple":
+                    return "사과";
+                case "banana":
+                    return "바나나";
+                case "grape":
+                    return "포도";
+                case "kiwi":
+                    return "키위";
+                case "lemon":
+                    return "레몬";
+                case "melon":
+                    return "멜론";
+                case "orange":
+                    return "오렌지";
+                case "pear":
+                    return "배";
+                default:
+                    return null;
+            }
+
+
+            //if (engWord.Equals("elephant"))
+            //    return "코끼리";
+            //else if (engWord.Equals("giraffe"))
+            //    return "기린";
+            //else if (engWord.Equals("hippo"))
+            //    return "하마";
         }
 
         public void SetQuiz()
@@ -250,6 +334,11 @@ namespace KinectEducationForKids
                 return true;
             }
             return false;
+        }
+
+        public string getAnswerName()
+        {
+            return this.QuizElementNameList[AnswerNum];
         }
     }
 }

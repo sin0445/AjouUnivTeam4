@@ -35,12 +35,12 @@
             <StackPanel Name="panel3" Orientation="Vertical" >
                 <Button Name="btn_back" Click="btn_back_Click" Width="375" Height="158" Margin="30" Background="White">
                     <Button.Content>
-                        <Image Source="/KinectEducationForKids;component/Images/btn_back2.png" />
+                        <Image Source="/KinectEducationForKids;component/Images/btn_back2.jpg" Stretch="Fill"/>
                     </Button.Content>
                 </Button>
                 <Button Name="btn_next" Width="375" Height="158" Margin="30" Click="btn_next_Click" Background="White">
                     <Button.Content>
-                        <Image Source="/KinectEducationForKids;component/Images/btn_next.png" />
+                        <Image Source="/KinectEducationForKids;component/Images/btn_next.jpg" Stretch="Fill"/>
                     </Button.Content>
                 </Button>
             </StackPanel>

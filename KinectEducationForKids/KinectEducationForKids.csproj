@@ -132,7 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\btn_animal.png" />
-    <Resource Include="Images\btn_back2.png" />
     <Resource Include="Images\btn_cons.png" />
     <Resource Include="Images\btn_exit.png" />
     <Resource Include="Images\btn_fruit.png" />
@@ -140,7 +139,6 @@
     <Resource Include="Images\btn_vowel.png" />
     <Resource Include="Images\btn_writing.png" />
     <Resource Include="Images\img_main.jpg" />
-    <Resource Include="Images\btn_prev.jpg" />
     <Resource Include="Images\con_1.png" />
     <Resource Include="Images\con_2.png" />
     <Resource Include="Images\con_3.png" />
@@ -171,6 +169,9 @@
     <Resource Include="Images\img_back.jpg" />
     <Resource Include="Images\img_next.jpg" />
     <Resource Include="Images\img_prev.jpg" />
+    <Resource Include="Images\btn_back2.jpg" />
+    <Resource Include="Images\btn_next.jpg" />
+    <Resource Include="Images\btn_prev.jpg" />
     <Content Include="Media\bgm_draw.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -197,7 +198,6 @@
     <Resource Include="Images\btn_lion.png" />
     <Resource Include="Images\btn_melon.png" />
     <Resource Include="Images\btn_monkey.png" />
-    <Resource Include="Images\btn_next.png" />
     <Resource Include="Images\btn_orange.png" />
     <Resource Include="Images\btn_pear.png" />
     <Resource Include="Images\btn_penguin.png" />
